@@ -1,6 +1,5 @@
-import * as usersController from "./usersController";
-// @ts-ignore
-import * as activityController from "./activityController";
-import * as userActivityController from "./userActivityController";
+import usersController from "./usersController";
+import activityController from "./activityController";
+import userActivityController from "./userActivityController";
 
-exports = { usersController, activityController, userActivityController };
+export { usersController, activityController, userActivityController };

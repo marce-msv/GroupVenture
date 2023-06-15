@@ -140,4 +140,4 @@ const editActivity = async function (req: Request, res: Response) {
   }
 };
 
-export { postActivity, getActivities, getActivityInfo, deleteActivity, editActivity };
+export default { postActivity, getActivities, getActivityInfo, deleteActivity, editActivity };

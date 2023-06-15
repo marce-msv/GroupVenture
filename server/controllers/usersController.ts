@@ -100,4 +100,4 @@ const editUser = async function (req: Request, res: Response) {
   }
 };
 
-export { postUser, getUserInfo, login, logout, editUser };
+export default { postUser, getUserInfo, login, logout, editUser };

@@ -62,4 +62,4 @@ const leaveParticipant = async (req: Request, res: Response) => {
   }
 };
 
-export { joinParticipant, leaveParticipant };
+export default { joinParticipant, leaveParticipant };
