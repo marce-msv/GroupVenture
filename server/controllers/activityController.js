@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// @ts-ignore
 const associations_1 = require("../models/associations");
+// import Activity from '../models/associations';
+// import UserActivityParticipation from '../models/associations';
 const postActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, date, meetingPoint, coordinates, typeOfActivity, aboutActivity, spots, telegramLink, createdBy, } = req.body;
     try {
@@ -32,7 +33,7 @@ const postActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(500).json({ message: err.message });
     }
 });
-const getActivities = (res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const getActivities = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const activities = yield associations_1.Activity.findAll({
             include: [
@@ -42,7 +43,7 @@ const getActivities = (res, next) => __awaiter(void 0, void 0, void 0, function*
                 },
             ],
         });
-        if (!activities) {
+        if (!activities) { // if activites.length 
             res.status(404).json({
                 success: false,
                 data: null,

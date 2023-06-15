@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
-// @ts-ignore
 import { User } from '../models/associations';
+import { UserAttributes, UserModel, UserStatic } from '../models/user';
+import { UserClass } from '../models/user';
 import { Request, Response } from 'express';
-
 
 
 const postUser = async (req: Request, res: Response) => {
@@ -48,6 +48,7 @@ const postUser = async (req: Request, res: Response) => {
 
 const getUserInfo = async function (req: Request, res: Response) {
   try {
+    console.log('hey');    
     let user = await User.findOne({ where: { id: req.params.id } });
     res.status(200);
     res.json(user);
@@ -60,7 +61,7 @@ const getUserInfo = async function (req: Request, res: Response) {
 const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email: email } });
+    const user: UserModel | any = await User.findOne({ where: { email: email } });
     const validatedPass = await bcrypt.compare(password, user.password);
 
     if (!validatedPass) {

@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// @ts-ignore
 const associations_1 = require("../models/associations");
 const joinParticipant = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

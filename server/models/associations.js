@@ -3,9 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserActivityParticipation = exports.Activity = exports.User = void 0;
 const user_1 = __importDefault(require("./user"));
+exports.User = user_1.default;
 const activity_1 = __importDefault(require("./activity"));
+exports.Activity = activity_1.default;
 const userActivityParticipation_1 = __importDefault(require("./userActivityParticipation"));
+exports.UserActivityParticipation = userActivityParticipation_1.default;
 user_1.default.hasMany(activity_1.default, {
     foreignKey: "createdBy",
 });
@@ -23,7 +27,3 @@ activity_1.default.belongsToMany(user_1.default, {
 activity_1.default.hasMany(userActivityParticipation_1.default, {
     foreignKey: "activityId",
 });
-// UserActivityParticipation.belongsTo(Activity, {
-//   foreignKey: "activityId",
-// });
-exports.default = { User: user_1.default, Activity: activity_1.default, UserActivityParticipation: userActivityParticipation_1.default };

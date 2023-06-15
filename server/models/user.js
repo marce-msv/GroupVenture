@@ -1,11 +1,15 @@
-"use strict";
+'use strict';
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserClass = void 0;
 const sequelize_1 = require("sequelize");
 const modelDB_1 = __importDefault(require("./modelDB"));
-const User = modelDB_1.default.define("User", {
+class UserClass extends sequelize_1.Model {
+}
+exports.UserClass = UserClass;
+const User = modelDB_1.default.define('User', {
     avatar: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: true,

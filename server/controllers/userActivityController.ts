@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-// @ts-ignore
 import { UserActivityParticipation } from '../models/associations';
 
 const joinParticipant = async (req: Request, res: Response, next: NextFunction) => {

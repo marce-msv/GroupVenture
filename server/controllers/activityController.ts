@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-// @ts-ignore
+
 import { Activity, UserActivityParticipation } from '../models/associations';
+import { ActivityStatic } from '../models/activity';
+// import Activity from '../models/associations';
+// import UserActivityParticipation from '../models/associations';
 
 const postActivity = async (req: Request, res: Response) => {
   const {
@@ -33,7 +36,7 @@ const postActivity = async (req: Request, res: Response) => {
   }
 };
 
-const getActivities = async (res: Response, next: NextFunction) => {
+const getActivities = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const activities = await Activity.findAll({
       include: [
@@ -44,7 +47,7 @@ const getActivities = async (res: Response, next: NextFunction) => {
       ],
     });
 
-    if (!activities) {
+    if (!activities) { // if activites.length 
       res.status(404).json({
         success: false,
         data: null,
@@ -53,8 +56,8 @@ const getActivities = async (res: Response, next: NextFunction) => {
       return next();
     }
 
-    const processedActivities = activities.map((activity: Activity) => {
-      let participations = activity.dataValues.UserActivityParticipations.map(
+    const processedActivities = activities.map((activity) => {
+      let participations = (activity.dataValues.UserActivityParticipations as { userId: number }[]).map(
         (participation: { userId: number }) => participation.userId
       );
 
@@ -96,7 +99,7 @@ const getActivityInfo = async function (req: Request, res: Response, next: NextF
       return next();
     }
 
-    const participations = activity.dataValues.UserActivityParticipations.map(
+    const participations = (activity.dataValues.UserActivityParticipations as { userId: number }[]).map(
       (participation: { userId: number }) => participation.userId
     );
     const newActivity = Object.assign({}, activity.dataValues);

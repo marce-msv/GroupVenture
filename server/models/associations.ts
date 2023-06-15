@@ -1,5 +1,3 @@
-"use strict"
-
 import User from "./user";
 import Activity from "./activity";
 import UserActivityParticipation from "./userActivityParticipation";
@@ -24,8 +22,4 @@ Activity.hasMany(UserActivityParticipation, {
   foreignKey: "activityId",
 });
 
-// UserActivityParticipation.belongsTo(Activity, {
-//   foreignKey: "activityId",
-// });
-
-export default{ User, Activity, UserActivityParticipation };
+export { User, Activity, UserActivityParticipation };

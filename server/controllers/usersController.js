@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
-// @ts-ignore
 const associations_1 = require("../models/associations");
 const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { avatar, firstName, lastName, age, password, email, infoAboutUser } = req.body;

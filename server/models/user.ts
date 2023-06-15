@@ -1,9 +1,27 @@
-"use strict"
+'use strict';
 
-import { DataTypes } from "sequelize";
-import sequelize from "./modelDB";
+import { DataTypes, Model, BuildOptions } from 'sequelize';
+import sequelize from './modelDB';
 
-const User = sequelize.define("User", {
+export interface UserAttributes {
+  id?: number;
+  avatar: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  password: string;
+  email: string;
+  infoAboutUser: string;
+}
+
+export interface UserModel extends Model<UserAttributes>, UserAttributes {}
+export class UserClass extends Model<UserModel, UserAttributes> {}
+
+export type UserStatic = typeof Model & {
+  new (values?: object, options?: BuildOptions): UserModel;
+};
+
+const User = <UserStatic>sequelize.define('User', {
   avatar: {
     type: DataTypes.STRING,
     allowNull: true,

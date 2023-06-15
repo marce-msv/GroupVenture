@@ -1,13 +1,20 @@
-"use strict"
+'use strict';
 
-import { Request, Response, NextFunction } from "express";
-// import { Session } from "express-session"
+import { Request, Response, NextFunction } from 'express';
 
-import User from "./../models/user";
+// import { User } from '../models/associations';
+import User from './../models/user';
+import { Session } from 'express-session';
+
+import { UserAttributes } from '../models/user';
+
+interface customSession extends Session {
+  uid: string;
+}
 
 interface customRequest extends Request {
-  session: any;
-  user: any;
+  session: customSession;
+  user: UserAttributes;
 }
 
 const authMiddleware = async (req: customRequest, res: Response, next: NextFunction) => {
@@ -15,7 +22,7 @@ const authMiddleware = async (req: customRequest, res: Response, next: NextFunct
     const { uid } = req.session;
 
     if (!uid) {
-      throw new Error("No session uid");
+      throw new Error('No session uid');
     }
 
     const user = await User.findOne({ where: { id: uid } });
