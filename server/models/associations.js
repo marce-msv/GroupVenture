@@ -1,29 +1,29 @@
-const User = require("./user");
-const Activity = require("./activity");
-const UserActivityParticipation = require("./userActivityParticipation");
-
-User.hasMany(Activity, {
-  foreignKey: "createdBy",
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const user_1 = __importDefault(require("./user"));
+const activity_1 = __importDefault(require("./activity"));
+const userActivityParticipation_1 = __importDefault(require("./userActivityParticipation"));
+user_1.default.hasMany(activity_1.default, {
+    foreignKey: "createdBy",
 });
-
-User.belongsToMany(Activity, {
-  through: UserActivityParticipation,
-  foreignKey: "userId",
+user_1.default.belongsToMany(activity_1.default, {
+    through: userActivityParticipation_1.default,
+    foreignKey: "userId",
 });
-
-Activity.belongsTo(User, {
-  foreignKey: "createdBy",
+activity_1.default.belongsTo(user_1.default, {
+    foreignKey: "createdBy",
 });
-Activity.belongsToMany(User, {
-  through: UserActivityParticipation,
-  foreignKey: "activityId",
+activity_1.default.belongsToMany(user_1.default, {
+    through: userActivityParticipation_1.default,
+    foreignKey: "activityId",
 });
-Activity.hasMany(UserActivityParticipation, {
-  foreignKey: "activityId",
+activity_1.default.hasMany(userActivityParticipation_1.default, {
+    foreignKey: "activityId",
 });
-
 // UserActivityParticipation.belongsTo(Activity, {
 //   foreignKey: "activityId",
 // });
-
-module.exports = { User, Activity, UserActivityParticipation };
+exports.default = { User: user_1.default, Activity: activity_1.default, UserActivityParticipation: userActivityParticipation_1.default };

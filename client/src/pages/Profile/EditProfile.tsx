@@ -75,6 +75,7 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
       };
 
       const userUpdated = await updateUser(uid, user);
+      console.log(userUpdated)
 
       const fileInput = document.getElementById("avatar") as HTMLInputElement;
       if (fileInput) {
@@ -99,7 +100,7 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
               <div className=' d-flex justify-content-center'>
                 <div className='profileAvatar'>
                   {formData.avatar || profileUser?.avatar ? (
-                    <img src={image} />
+                    <img src={image} alt="img"/>
                   ) : (
                     <div className='altTextContainer'>
                       <div>Choose your profile picture</div>
