@@ -1,7 +1,7 @@
 "use strict"
 
 import { DataTypes } from "sequelize";
-import sequelize from "./modelDB";
+import sequelize from "./modelDB.js";
 
 const Activity = sequelize.define("Activity", {
   title: {
