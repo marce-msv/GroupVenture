@@ -75,8 +75,8 @@ export default function SignupPage() {
       return;
     }
 
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dspd8serh/upload";
-    const cloudinaryUploadPreset = "GroupVenture";
+    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dpzz6vn2w/upload";
+    const cloudinaryUploadPreset = "AleCloud";
 
     const formDataToUpload = new FormData();
     formDataToUpload.append("file", formData.avatar || "");
