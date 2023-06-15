@@ -1,6 +1,8 @@
-const User = require("./user");
-const Activity = require("./activity");
-const UserActivityParticipation = require("./userActivityParticipation");
+"use strict"
+
+import User from "./user";
+import Activity from "./activity";
+import UserActivityParticipation from "./userActivityParticipation";
 
 User.hasMany(Activity, {
   foreignKey: "createdBy",
@@ -26,4 +28,4 @@ Activity.hasMany(UserActivityParticipation, {
 //   foreignKey: "activityId",
 // });
 
-module.exports = { User, Activity, UserActivityParticipation };
+export default{ User, Activity, UserActivityParticipation };

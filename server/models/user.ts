@@ -1,5 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("./modelDB");
+"use strict"
+
+import { DataTypes } from "sequelize";
+import sequelize from "./modelDB";
 
 const User = sequelize.define("User", {
   avatar: {
@@ -33,4 +35,4 @@ const User = sequelize.define("User", {
   },
 });
 
-module.exports = User;
+export default User;

@@ -1,5 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("./modelDB");
+"use strict"
+
+import { DataTypes } from "sequelize";
+import sequelize from "./modelDB";
 
 const Activity = sequelize.define("Activity", {
   title: {
@@ -40,4 +42,4 @@ const Activity = sequelize.define("Activity", {
   },
 });
 
-module.exports = Activity;
+export default Activity;

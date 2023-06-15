@@ -1,5 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("./modelDB");
+"use strict"
+
+import { DataTypes } from "sequelize";
+import sequelize from "./modelDB";
 
 const UserActivityParticipation = sequelize.define(
   "UserActivityParticipation",
@@ -23,4 +25,4 @@ const UserActivityParticipation = sequelize.define(
   }
 );
 
-module.exports = UserActivityParticipation;
+export default UserActivityParticipation;
