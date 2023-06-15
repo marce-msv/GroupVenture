@@ -16,6 +16,13 @@
     "express-session": "^1.17.3",
     "pg": "^8.11.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.32.0"
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.32.0",
+    "sequelize-typescript": "^2.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "@types/validator": "^13.7.17",
+    "typescript": "^5.1.3"
   }
 }
