@@ -68,7 +68,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(401).send({ error: '401', message: 'Username or password is incorrect' });
     }
 });

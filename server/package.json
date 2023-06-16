@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles test/userController.test",
+    "test:user": "jest --detectOpenHandles test/userController.test",
     "build": "tsc --watch",
     "server": "nodemon index.js"
   },

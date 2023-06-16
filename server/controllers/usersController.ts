@@ -55,7 +55,7 @@ const login = async (req: Request, res: Response) => {
       res.status(200).send({ success: true, data: user.id, message: 'OK' });
     }
   } catch (err: any) {
-    console.log(err);
+    // console.log(err);
     res.status(401).send({ error: '401', message: 'Username or password is incorrect' });
   }
 };
