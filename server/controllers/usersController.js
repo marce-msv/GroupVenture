@@ -59,6 +59,7 @@ const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const getUserInfo = function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            console.log('hey');
             let user = yield associations_1.User.findOne({ where: { id: req.params.id } });
             res.status(200);
             res.json(user);

@@ -2,11 +2,10 @@
 
 import { Request, Response, NextFunction } from 'express';
 
-// import { User } from '../models/associations';
-import User from './../models/user';
+import { User } from '../models/associations';
 import { Session } from 'express-session';
 
-import { UserAttributes } from '../models/user';
+import { UserAttributes, UserModel } from '../models/user';
 
 interface customSession extends Session {
   uid: string;
@@ -14,12 +13,12 @@ interface customSession extends Session {
 
 interface customRequest extends Request {
   session: customSession;
-  user: UserAttributes;
+  user: UserModel;
 }
 
-const authMiddleware = async (req: customRequest, res: Response, next: NextFunction) => {
+const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { uid } = req.session;
+    const { uid } = (req as customRequest).session;
 
     if (!uid) {
       throw new Error('No session uid');
@@ -31,11 +30,13 @@ const authMiddleware = async (req: customRequest, res: Response, next: NextFunct
       throw new Error();
     }
 
-    req.user = user;
+    (req as customRequest).user = user;
     next();
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(401);
+  } catch (err: any) {
+    console.log(err);
+    // return res.sendStatus(401);
+    // or this?
+    res.status(401).json({ message: err.message });
   }
 };
 
