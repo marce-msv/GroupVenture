@@ -8,6 +8,12 @@ import {
   userActivityController,
 } from './controllers/indexController';
 
+router.get('/test', async (req, res) => {
+  res.status(200);
+  res.json({ message: 'pass!' });
+});
+
+
 // User
 router.post('/signup', usersController.postUser);
 router.post('/login', usersController.login);
@@ -18,12 +24,13 @@ router.put('/profile/edit/:id', usersController.editUser);
 // Activity
 router.post('/addactivity', activityController.postActivity);
 router.get('/activities', activityController.getActivities);
-router.get('/:id', activityController.getActivityInfo);
+router.get('/activity/:id', activityController.getActivityInfo); // TODO ==> CHANGE FE ROUTE
 router.delete('/delete/:id', activityController.deleteActivity);
 router.put('/editactivity/:id', activityController.editActivity);
 
 // User activity
 router.post('/activities/join', userActivityController.joinParticipant);
 router.post('/activities/leave', userActivityController.leaveParticipant);
+
 
 export default router;
