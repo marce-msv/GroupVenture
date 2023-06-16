@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -10,8 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const associations_1 = require("../models/associations");
-// import Activity from '../models/associations';
-// import UserActivityParticipation from '../models/associations';
 const postActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, date, meetingPoint, coordinates, typeOfActivity, aboutActivity, spots, telegramLink, createdBy, } = req.body;
     try {
@@ -43,7 +41,7 @@ const getActivities = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                 },
             ],
         });
-        if (!activities) { // if activites.length 
+        if (!activities.length) {
             res.status(404).json({
                 success: false,
                 data: null,

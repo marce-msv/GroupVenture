@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.authMiddleware = void 0;
 const associations_1 = require("../models/associations");
 const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,9 +26,7 @@ const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
     catch (err) {
         console.log(err);
-        // return res.sendStatus(401);
-        // or this?
         res.status(401).json({ message: err.message });
     }
 });
-exports.default = authMiddleware;
+exports.authMiddleware = authMiddleware;

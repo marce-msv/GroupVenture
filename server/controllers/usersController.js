@@ -15,29 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const associations_1 = require("../models/associations");
 const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { avatar, firstName, lastName, age, password, email, infoAboutUser } = req.body;
-    //   Refactor to
-    //   const { password, email } = req.body;
+    const { password, email } = req.body;
     const user = yield associations_1.User.findOne({ where: { email: email } });
-    //   Refactor to
-    //   const user = await User.findOne({ where: email });
     if (user)
         return res.status(409).send({ error: '409', message: 'User already exists' });
     try {
         if (password === '')
-            throw new Error();
+            throw new Error(); // This could be a FE condition
         const hash = yield bcrypt_1.default.hash(password, 10);
-        const user = yield associations_1.User.create({
-            avatar,
-            firstName,
-            lastName,
-            age,
-            password: hash,
-            email,
-            infoAboutUser,
-        });
-        //   Refactor to
-        //   const user = await User.create({ ...req.body, password: hash });
+        const user = yield associations_1.User.create(Object.assign(Object.assign({}, req.body), { password: hash }));
         let safeUser = {
             avatar: user.avatar,
             firstName: user.firstName,
@@ -59,10 +45,8 @@ const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const getUserInfo = function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log('hey');
             let user = yield associations_1.User.findOne({ where: { id: req.params.id } });
-            res.status(200);
-            res.json(user);
+            res.status(200).json(user);
         }
         catch (err) {
             console.log(err);
@@ -74,13 +58,14 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
         const user = yield associations_1.User.findOne({ where: { email: email } });
-        const validatedPass = yield bcrypt_1.default.compare(password, user.password);
-        if (!validatedPass) {
-            throw new Error('incorrect password');
+        if (user) {
+            const validatedPass = yield bcrypt_1.default.compare(password, user.password);
+            if (!validatedPass) {
+                throw new Error('incorrect password');
+            }
+            req.session.uid = user.id;
+            res.status(200).send({ success: true, data: user.id, message: 'OK' });
         }
-        // @ts-ignore
-        req.session.uid = user.id;
-        res.status(200).send({ success: true, data: user.id, message: 'OK' });
     }
     catch (err) {
         console.log(err);
@@ -93,18 +78,15 @@ const logout = (req, res) => {
             res.status(500).send({ error, message: 'Could not log out, please try again' });
         }
         else {
-            res.clearCookie('sid');
-            res.status(200).send({ message: 'Logout successful' });
+            res.clearCookie('sid').status(200).send({ message: 'Logout successful' });
         }
     });
 };
 const editUser = function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { id, info } = req.body;
+        const { id } = req.body;
         try {
-            const rowsAffected = yield associations_1.User.update(info, { where: { id: id } });
             const usrUpdated = yield associations_1.User.findByPk(id);
-            console.log(usrUpdated);
             res.status(200).json(usrUpdated);
         }
         catch (err) {

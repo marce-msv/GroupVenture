@@ -1,9 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+'use strict';
 
+import { Request, Response, NextFunction } from 'express';
 import { Activity, UserActivityParticipation } from '../models/associations';
-import { ActivityStatic } from '../models/activity';
-// import Activity from '../models/associations';
-// import UserActivityParticipation from '../models/associations';
 
 const postActivity = async (req: Request, res: Response) => {
   const {
@@ -47,7 +45,7 @@ const getActivities = async (req: Request, res: Response, next: NextFunction) =>
       ],
     });
 
-    if (!activities) { // if activites.length 
+    if (!activities.length) {
       res.status(404).json({
         success: false,
         data: null,
@@ -57,9 +55,9 @@ const getActivities = async (req: Request, res: Response, next: NextFunction) =>
     }
 
     const processedActivities = activities.map((activity) => {
-      let participations = (activity.dataValues.UserActivityParticipations as { userId: number }[]).map(
-        (participation: { userId: number }) => participation.userId
-      );
+      let participations = (
+        activity.dataValues.UserActivityParticipations as { userId: number }[]
+      ).map((participation: { userId: number }) => participation.userId);
 
       const newActivity = Object.assign({}, activity.dataValues);
       newActivity.UserActivityParticipations = participations;
@@ -99,9 +97,9 @@ const getActivityInfo = async function (req: Request, res: Response, next: NextF
       return next();
     }
 
-    const participations = (activity.dataValues.UserActivityParticipations as { userId: number }[]).map(
-      (participation: { userId: number }) => participation.userId
-    );
+    const participations = (
+      activity.dataValues.UserActivityParticipations as { userId: number }[]
+    ).map((participation: { userId: number }) => participation.userId);
     const newActivity = Object.assign({}, activity.dataValues);
     newActivity.UserActivityParticipations = participations;
 

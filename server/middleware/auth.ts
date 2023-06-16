@@ -1,14 +1,12 @@
 'use strict';
 
 import { Request, Response, NextFunction } from 'express';
-
 import { User } from '../models/associations';
 import { Session } from 'express-session';
-
-import { UserAttributes, UserModel } from '../models/user';
+import { UserModel } from '../models/user';
 
 interface customSession extends Session {
-  uid: string;
+  uid?: number;
 }
 
 interface customRequest extends Request {
@@ -34,10 +32,8 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
     next();
   } catch (err: any) {
     console.log(err);
-    // return res.sendStatus(401);
-    // or this?
     res.status(401).json({ message: err.message });
   }
 };
 
-export default authMiddleware;
+export { authMiddleware, customRequest };
