@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const auth_js_1 = require("./middleware/auth.js");
 const router = express_1.default.Router();
 const indexController_1 = require("./controllers/indexController");
 router.get('/test', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,8 +25,8 @@ router.post('/signup', indexController_1.usersController.postUser);
 router.post('/login', indexController_1.usersController.login);
 router.post('/logout', indexController_1.usersController.logout);
 router.get('/profile/:id', indexController_1.usersController.getUserInfo);
-// router.get('/profile/:id', authMiddleware, usersController.getUserInfo);
-router.put('/profile/edit/:id', indexController_1.usersController.editUser);
+router.get('/profile/:id', auth_js_1.authMiddleware, indexController_1.usersController.getUserInfo);
+// router.put('/profile/edit/:id', usersController.editUser);
 // Activity
 router.post('/addactivity', indexController_1.activityController.postActivity);
 router.get('/activities', indexController_1.activityController.getActivities);
