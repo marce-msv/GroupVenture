@@ -15,13 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const associations_1 = require("../models/associations");
 const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.body.email)
+        return res.status(409).send({ error: '409', message: 'Missing input email' });
+    if (!req.body.password)
+        return res.status(409).send({ error: '409', message: 'Missing input password' });
     const { password, email } = req.body;
     const user = yield associations_1.User.findOne({ where: { email: email } });
     if (user)
         return res.status(409).send({ error: '409', message: 'User already exists' });
     try {
-        if (password === '')
-            throw new Error(); // This could be a FE condition
         const hash = yield bcrypt_1.default.hash(password, 10);
         const user = yield associations_1.User.create(Object.assign(Object.assign({}, req.body), { password: hash }));
         let safeUser = {
@@ -38,37 +40,24 @@ const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({ message: err.message });
     }
 });
-const getUserInfo = function (req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            let user = yield associations_1.User.findOne({ where: { id: req.params.id } });
-            res.status(200).json(user);
-        }
-        catch (err) {
-            console.log(err);
-            res.status(500).json({ message: err.message });
-        }
-    });
-};
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
         const user = yield associations_1.User.findOne({ where: { email: email } });
-        if (user) {
-            const validatedPass = yield bcrypt_1.default.compare(password, user.password);
-            if (!validatedPass) {
-                throw new Error('incorrect password');
-            }
-            req.session.uid = user.id;
-            res.status(200).send({ success: true, data: user.id, message: 'OK' });
-        }
+        if (!user)
+            throw new Error();
+        const validatedPass = yield bcrypt_1.default.compare(password, user.password);
+        if (!validatedPass)
+            throw new Error();
+        req.session.uid = user.id;
+        res.status(200).send({ success: true, data: user.id, message: 'OK' });
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(401).send({ error: '401', message: 'Username or password is incorrect' });
     }
 });
@@ -79,6 +68,30 @@ const logout = (req, res) => {
         }
         else {
             res.clearCookie('sid').status(200).send({ message: 'Logout successful' });
+        }
+    });
+};
+const getUserInfo = function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let user = yield associations_1.User.findOne({ where: { id: req.params.id } });
+            if (user) {
+                let safeUser = {
+                    id: req.params.id,
+                    avatar: user.avatar,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    age: user.age,
+                    email: user.email,
+                    infoAboutUser: user.infoAboutUser,
+                };
+                res.status(200).json(safeUser);
+            }
+        }
+        catch (err) {
+            // console.log(err);
+            res.status(400).send({ error: '400', message: 'Bad user request' });
+            ;
         }
     });
 };
