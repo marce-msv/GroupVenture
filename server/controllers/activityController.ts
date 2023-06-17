@@ -27,9 +27,20 @@ const postActivity = async (req: Request, res: Response) => {
       telegramLink,
       createdBy,
     });
-    res.status(201).json(activity);
+    const safeActivity = {
+      title: activity.title,
+      date: activity.date,
+      meetingPoint: activity.meetingPoint,
+      coordinates: activity.coordinates,
+      typeOfActivity: activity.typeOfActivity,
+      aboutActivity: activity.aboutActivity,
+      spots: activity.spots,
+      telegramLink: activity.telegramLink,
+      createdBy: activity.createdBy,
+    }
+    res.status(201).json(safeActivity);
   } catch (err: any) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -105,7 +116,7 @@ const getActivityInfo = async function (req: Request, res: Response, next: NextF
 
     res.status(200).json(newActivity);
   } catch (err: any) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -123,7 +134,7 @@ const deleteActivity = async function (req: Request, res: Response) {
     let activity = await Activity.destroy({ where: { id: id } });
     res.json(activity);
   } catch (err: any) {
-    console.log(err);
+    // console.log(err);
     res.status(400).json({ message: err.message });
   }
 };
@@ -136,7 +147,7 @@ const editActivity = async function (req: Request, res: Response) {
     const actUpdated = await Activity.findByPk(id);
     res.status(200).json(actUpdated);
   } catch (err: any) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({ message: err.message });
   }
 };
