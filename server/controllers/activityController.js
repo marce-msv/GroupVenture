@@ -24,10 +24,21 @@ const postActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             telegramLink,
             createdBy,
         });
-        res.status(201).json(activity);
+        const safeActivity = {
+            title: activity.title,
+            date: activity.date,
+            meetingPoint: activity.meetingPoint,
+            coordinates: activity.coordinates,
+            typeOfActivity: activity.typeOfActivity,
+            aboutActivity: activity.aboutActivity,
+            spots: activity.spots,
+            telegramLink: activity.telegramLink,
+            createdBy: activity.createdBy,
+        };
+        res.status(201).json(safeActivity);
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({ message: err.message });
     }
 });
@@ -91,7 +102,7 @@ const getActivityInfo = function (req, res, next) {
             res.status(200).json(newActivity);
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             res.status(500).json({ message: err.message });
         }
     });
@@ -111,7 +122,7 @@ const deleteActivity = function (req, res) {
             res.json(activity);
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             res.status(400).json({ message: err.message });
         }
     });
@@ -126,7 +137,7 @@ const editActivity = function (req, res) {
             res.status(200).json(actUpdated);
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             res.status(500).json({ message: err.message });
         }
     });
