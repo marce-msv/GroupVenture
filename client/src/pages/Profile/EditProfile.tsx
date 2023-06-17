@@ -1,14 +1,14 @@
-import { MDBBtn, MDBInput, MDBTextArea } from "mdb-react-ui-kit";
-import "./Profile.css";
-import { FormDataInterface } from "../Authentication/SignupPage";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useUID } from "../../customHooks";
+import { MDBBtn, MDBInput, MDBTextArea } from "mdb-react-ui-kit";
+import { FormDataInterface } from "../Authentication/SignupPage";
 import { updateUser } from "../../Services/serviceUser";
+import { useUID } from "../../customHooks";
+import "./Profile.css";
 
 const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
+
   const uid = useUID();
   const [image, _setImage] = useState(profileUser?.avatar);
-
   const [formData, setFormData] = useState<FormDataInterface>({
     avatar: null,
     firstName: "",
@@ -44,6 +44,7 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
       });
     }
   };
+  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

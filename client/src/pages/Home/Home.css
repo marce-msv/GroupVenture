@@ -16,6 +16,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  filter: blur(0px);
 }
 
 .mapHomePage {
