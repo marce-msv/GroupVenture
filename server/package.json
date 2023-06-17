@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:user": "(tsc && jest test/userController.test)",
+    "test:activity": "(tsc && jest test/activityController.test)",
+    "test": "npm run test:user && npm run test:activity",
     "build": "tsc --watch",
     "server": "nodemon index.js"
   },

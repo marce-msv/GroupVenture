@@ -30,7 +30,7 @@ router.get('/profile/:id', auth_js_1.authMiddleware, indexController_1.usersCont
 // Activity
 router.post('/addactivity', indexController_1.activityController.postActivity);
 router.get('/activities', indexController_1.activityController.getActivities);
-router.get('/activity/:id', indexController_1.activityController.getActivityInfo); // TODO ==> CHANGE FE ROUTE
+router.get('/activity/:id', indexController_1.activityController.getActivityInfo);
 router.delete('/delete/:id', indexController_1.activityController.deleteActivity);
 router.put('/editactivity/:id', indexController_1.activityController.editActivity);
 // User activity

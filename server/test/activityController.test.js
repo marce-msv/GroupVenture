@@ -1,46 +1,32 @@
-const request = require('supertest');
+'use strict';
 
+const request = require('supertest');
 const { default: app } = require('../app.js');
 const { default: Activity } = require('../models/activity.js');
+const { default: User } = require('../models/user.js');
 const { default: sequelize } = require('../models/modelDB.js');
-const { describe } = require('node:test');
-
-const mocks = {
-  activity1: {
-    title: 'Activity Title',
-    createdBy: 1,
-    date: 'tomorrow',
-    meetingPoint: 'Mi casa',
-    coordinates: {
-      lat: '123',
-      lng: '456',
-    },
-    typeOfActivity: 'Sport activities',
-    aboutActivity: 'Drink Beers',
-    spots: 1,
-    telegramLink: 'linkToTelegram.com',
-  },
-  activity2: {},
-};
 
 beforeAll(async () => {
   await Activity.destroy({ where: {} });
+  await User.destroy({ where: {} });
 });
 
 afterAll(async () => {
   await Activity.destroy({ where: {} });
+  await User.destroy({ where: {} });
   sequelize.close();
 });
 
 describe('POST / activity', () => {
   it('Should POST an activity and return 201', async () => {
+    const user = await User.create(mocks.u01);
     const res = await request(app)
       .post('/addactivity')
-      .send(mocks.activity1)
+      .send({ ...mocks.activity1, createdBy: user.id })
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/);
     expect(res.status).toBe(201);
-    expect(JSON.parse(res.text)).toStrictEqual(mocks.activity1);
+    expect(JSON.parse(res.text)).toStrictEqual({ ...mocks.activity1, createdBy: user.id });
   });
 
   it('Should return 500 if the object is null', async () => {
@@ -95,3 +81,29 @@ describe('GET / activities', () => {
     expect(res.status).toBe(404);
   });
 });
+
+const mocks = {
+  activity1: {
+    title: 'Activity Title',
+    date: 'tomorrow',
+    meetingPoint: 'Mi casa',
+    coordinates: {
+      lat: '123',
+      lng: '456',
+    },
+    typeOfActivity: 'Sport activities',
+    aboutActivity: 'Drink Beers',
+    spots: 1,
+    telegramLink: 'linkToTelegram.com',
+  },
+  activity2: {},
+  u01: {
+    avatar: 'avatar_url',
+    firstName: 'first name',
+    lastName: 'last name',
+    age: 5,
+    password: 'password',
+    email: 'email',
+    infoAboutUser: 'info',
+  },
+};

@@ -13,7 +13,6 @@ router.get('/test', async (req, res) => {
   res.json({ message: 'pass!' });
 });
 
-
 // User
 router.post('/signup', usersController.postUser);
 router.post('/login', usersController.login);
@@ -25,13 +24,12 @@ router.get('/profile/:id', authMiddleware, usersController.getUserInfo);
 // Activity
 router.post('/addactivity', activityController.postActivity);
 router.get('/activities', activityController.getActivities);
-router.get('/activity/:id', activityController.getActivityInfo); // TODO ==> CHANGE FE ROUTE
+router.get('/activity/:id', activityController.getActivityInfo);
 router.delete('/delete/:id', activityController.deleteActivity);
 router.put('/editactivity/:id', activityController.editActivity);
 
 // User activity
 router.post('/activities/join', userActivityController.joinParticipant);
 router.post('/activities/leave', userActivityController.leaveParticipant);
-
 
 export default router;

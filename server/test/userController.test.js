@@ -14,8 +14,6 @@ afterAll(async () => {
   sequelize.close();
 });
 
-console.log('hello');
-
 describe('User controllers tests', () => {
   //
   describe('Sign Up', () => {
