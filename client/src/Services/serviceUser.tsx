@@ -17,7 +17,7 @@ export const postUser = async (data: FormDataInterface) => {
   return response.json();
 };
 
-export function getUserById(id: string) {
+export function getUserById(id: number) {
   return fetch(root + 'profile/' + id, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -31,7 +31,7 @@ export function getUserById(id: string) {
   });
 }
 
-export function getUsersByIds(ids: string[]) {
+export function getUsersByIds(ids: number[]) {
   const promises = ids.map((id) => {
     return fetch(root + 'profile/' + id, {
       method: 'GET',

@@ -26,7 +26,9 @@ export default function Home() {
 
   const [markers, setMarkers] = useState<Coordinates[]>([]);
 
-  const [selectedMarker, setSelectedMarker] = useState<Coordinates | null>(null);
+  const [selectedMarker, setSelectedMarker] = useState<Coordinates | null>(
+    null
+  );
 
   const geocoder = new google.maps.Geocoder();
   const uid = useUID();
@@ -43,7 +45,11 @@ export default function Home() {
     }
 
     geocoder.geocode({ address }, (results, status) => {
-      if (status === google.maps.GeocoderStatus.OK && results && results.length > 0) {
+      if (
+        status === google.maps.GeocoderStatus.OK &&
+        results &&
+        results.length > 0
+      ) {
         const location = results[0].geometry.location;
         const latitude = location.lat();
         const longitude = location.lng();
@@ -66,15 +72,24 @@ export default function Home() {
   const loadMarkers = async () => {
     try {
       const activities = await getActivities();
-      const filteredActivities = activities.data.filter((activity: ActivityInterface) => {
-        if (formData.date && activity.date.substring(0, 10) !== formData.date) {
-          return false;
+      console.log('Activities in home: ', activities);
+      const filteredActivities = activities.data.filter(
+        (activity: ActivityInterface) => {
+          if (
+            formData.date &&
+            activity.date.substring(0, 10) !== formData.date
+          ) {
+            return false;
+          }
+          if (
+            formData.typeOfActivity &&
+            activity.typeOfActivity !== formData.typeOfActivity
+          ) {
+            return false;
+          }
+          return true;
         }
-        if (formData.typeOfActivity && activity.typeOfActivity !== formData.typeOfActivity) {
-          return false;
-        }
-        return true;
-      });
+      );
       const markers = filteredActivities.map((activity: ActivityInterface) => ({
         lat: activity.coordinates.lat,
         lng: activity.coordinates.lng,
@@ -101,7 +116,9 @@ export default function Home() {
     });
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
@@ -124,15 +141,18 @@ export default function Home() {
 
   return (
     <div
-      className="mainPage"
+      className='mainPage'
       style={{
         backgroundImage: 'url(/pexels.jpeg)',
       }}
     >
-      <div className="homePageMain">
-        <div className="bodyHome">
-          <form className="search-form" onSubmit={handleSubmit}>
-            <div className="form-group">
+      <div className='homePageMain'>
+        <div className='bodyHome'>
+          <form
+            className='search-form'
+            onSubmit={handleSubmit}
+          >
+            <div className='form-group'>
               <Autocomplete
                 onPlaceChanged={() => {
                   const selectedPlace = (
@@ -146,48 +166,52 @@ export default function Home() {
                 }}
               >
                 <input
-                  id="meetingPoint"
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter a meeting point"
+                  id='meetingPoint'
+                  type='text'
+                  className='form-control'
+                  placeholder='Enter a meeting point'
                   value={formData.meetingPoint}
                   onChange={handleChange}
                 />
               </Autocomplete>
             </div>
 
-            <div className="form-group">
+            <div className='form-group'>
               <select
-                id="typeOfActivity"
-                className="form-control"
+                id='typeOfActivity'
+                className='form-control'
                 value={formData.typeOfActivity}
                 onChange={handleTypeOfActivityChange}
               >
-                <option value="">Select an activity type</option>
-                <option value="hiking">Hiking</option>
-                <option value="trip">Trip</option>
-                <option value="city activities">City activities</option>
-                <option value="camping">Camping</option>
-                <option value="sport activities">Sport activities</option>
-                <option value="all">Select all</option>
+                <option value=''>Select an activity type</option>
+                <option value='hiking'>Hiking</option>
+                <option value='trip'>Trip</option>
+                <option value='city activities'>City activities</option>
+                <option value='camping'>Camping</option>
+                <option value='sport activities'>Sport activities</option>
+                <option value='all'>Select all</option>
               </select>
             </div>
 
-            <div className="form-group">
+            <div className='form-group'>
               <input
-                type="date"
-                id="date"
-                className="form-control"
-                name="date"
+                type='date'
+                id='date'
+                className='form-control'
+                name='date'
                 value={formData.date}
                 onChange={handleChange}
               />
             </div>
-            <div className="form-group">
-              <input type="submit" value="Search" className="search-button" />
+            <div className='form-group'>
+              <input
+                type='submit'
+                value='Search'
+                className='search-button'
+              />
             </div>
           </form>
-          <div className="mapHomePage">
+          <div className='mapHomePage'>
             <Map
               markers={markers}
               selectedMarker={selectedMarker}
@@ -195,9 +219,12 @@ export default function Home() {
               center={mapCenter as google.maps.LatLngLiteral}
             />
             {uid && (
-              <div className="cardContainer">
+              <div className='cardContainer'>
                 {selectedMarker && (
-                  <CardsForActivity marker={selectedMarker} onClose={setSelectedMarker} />
+                  <CardsForActivity
+                    marker={selectedMarker}
+                    onClose={setSelectedMarker}
+                  />
                 )}
               </div>
             )}

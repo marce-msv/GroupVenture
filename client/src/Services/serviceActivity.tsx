@@ -25,20 +25,25 @@ export const postActivity = async (data: ActivityInterface, user: number) => {
 // }
 export function getActivities() {
   return fetch(root + 'activities/')
-    .then((res) => res.json())
-    .then((res: ActivityInterface) => res)
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      console.log('response in service: ', res);
+      return res;
+    })
     .catch((error) => {
       throw new Error('Activity not found', error);
     });
 }
 
 export function getActivityById(id: string) {
-  return fetch(root + 'activity/' + id).then((response) => {
-    if (!response.ok) {
-      throw new Error('Activity not found');
-    }
-    return response.json();
-  });
+  return fetch(root + 'activity/' + id)
+    .then((res) => res.json())
+    .then((res: ActivityInterface) => res)
+    .catch((error) => {
+      throw new Error('Activity not found', error);
+    });
 }
 
 export function deleteActivityByID(id: string) {
