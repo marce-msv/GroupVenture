@@ -10,8 +10,8 @@ export interface Coordinates {
 interface MapProps {
   markers: Coordinates[];
   selectedMarker?: Coordinates | null;
-  onMapClick?: (event: google.maps.MouseEvent) => void;
-  onMarkerClick?: (marker: Coordinates, id?: any) => void;
+  onMapClick?: (event: google.maps.MapMouseEvent) => void;
+  onMarkerClick?: (marker: Coordinates, id?: string) => void;
   center?: google.maps.LatLngLiteral | undefined;
 }
 

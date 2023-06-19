@@ -18,15 +18,12 @@ export interface ActivityInterface {
 }
 
 export default function AddActivityPage() {
-  const uid = useUID();
   const geocoder = new google.maps.Geocoder();
   const [markerPosition, setMarkerPosition] = useState<Coordinates | null>(null);
-
   const [mapCenter, setMapCenter] = useState<Coordinates>({
     lat: 41.390205,
     lng: 2.154007,
   });
-
   const [formData, setFormData] = useState<ActivityInterface>({
     title: '',
     date: '',
@@ -40,6 +37,8 @@ export default function AddActivityPage() {
     spots: '',
     telegramLink: '',
   });
+
+  const uid = useUID();
 
   useEffect(() => {
     if (formData.coordinates.lng === null && formData.coordinates.lat === null) {
@@ -110,18 +109,21 @@ export default function AddActivityPage() {
     });
   };
 
+  // ANY TO BE CHANGED
   const handleMapClick = (event: any) => {
-    console.log('location before geocoder');
+    // console.log('event', event);
+
+    // console.log('location before geocoder');
     const latitude = event.latLng.lat();
     const longitude = event.latLng.lng();
     const location = new google.maps.LatLng(latitude, longitude);
 
-    console.log('location before geocoder');
-    console.log(location);
+    // console.log('location before geocoder');
+    // console.log(location);
 
     geocoder.geocode({ location }, (results, status) => {
       if (status === google.maps.GeocoderStatus.OK && results && results.length > 0) {
-        console.log('i am here');
+        // console.log('i am here');
         const address = results[0].formatted_address;
 
         setFormData({
@@ -132,8 +134,8 @@ export default function AddActivityPage() {
             lng: location.lng(),
           },
         });
-        console.log('Selected place:', address);
-        console.log('Location:', location.lat(), location.lng());
+        // console.log('Selected place:', address);
+        // console.log('Location:', location.lat(), location.lng());
 
         const marker = new google.maps.Marker({
           position: location,
@@ -147,7 +149,7 @@ export default function AddActivityPage() {
       }
     });
 
-    console.log('Map clicked:', event.latLng.lat(), event.latLng.lng());
+    // console.log('Map clicked:', event.latLng.lat(), event.latLng.lng());
   };
 
   return (

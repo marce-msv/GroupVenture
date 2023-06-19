@@ -51,8 +51,6 @@ export default function Profile() {
     }
   }, [profileEdited, id]);
 
-  // console.log(profileUser, '1. Profile user:');
-
   const handleClose = () => {
     setEditing(false);
   };
@@ -76,9 +74,10 @@ export default function Profile() {
     );
   };
 
-  const handleProfileEdit = () => {
+  const handleProfileEdit: Function = () => {
     setProfileEdited(true);
   };
+
 
   return (
     <div

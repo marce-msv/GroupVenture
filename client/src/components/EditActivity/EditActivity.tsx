@@ -4,8 +4,8 @@ import { ActivityInterface } from '../../pages/AddActivityPage/AddActivityPage';
 import { updateActivity } from '../../Services/serviceActivity';
 import './EditActivity.css';
 
+// ANY TO BE CHANGED
 export default function EditActivity({ handleClose, activity }: any) {
-  
   const [formData, setFormData] = useState<ActivityInterface>({
     title: '',
     date: '',
