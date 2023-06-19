@@ -17,7 +17,9 @@ export const postUser = async (data: FormDataInterface) => {
   return response.json();
 };
 
-export function getUserById(id: number) {
+export function getUserById(id: number | string) {
+  console.log('helo');
+  
   return fetch(root + 'profile/' + id, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -27,6 +29,8 @@ export function getUserById(id: number) {
     if (!response.ok) {
       throw new Error('User not found');
     }
+    console.log(response);
+    
     return response.json();
   });
 }

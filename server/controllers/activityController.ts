@@ -4,6 +4,9 @@ import { Request, Response, NextFunction } from 'express';
 import { Activity, UserActivityParticipation } from '../models/associations';
 
 const postActivity = async (req: Request, res: Response) => {
+  console.log('heoeoe1');
+  console.log(req.body);
+  
   const {
     title,
     date,
@@ -16,6 +19,9 @@ const postActivity = async (req: Request, res: Response) => {
     createdBy,
   } = req.body;
   try {
+    console.log('heoeoe2');
+
+
     const activity = await Activity.create({
       title,
       date,
@@ -27,6 +33,8 @@ const postActivity = async (req: Request, res: Response) => {
       telegramLink,
       createdBy,
     });
+    console.log('heoeoe3');
+
     const safeActivity = {
       title: activity.title,
       date: activity.date,
@@ -37,10 +45,13 @@ const postActivity = async (req: Request, res: Response) => {
       spots: activity.spots,
       telegramLink: activity.telegramLink,
       createdBy: activity.createdBy,
-    }
+    };
+    console.log('heoeoe4');
+
     res.status(201).json(safeActivity);
+    console.log('heoeoe5');
   } catch (err: any) {
-    // console.log(err);
+    console.log(err);
     res.status(500).json({ message: err.message });
   }
 };

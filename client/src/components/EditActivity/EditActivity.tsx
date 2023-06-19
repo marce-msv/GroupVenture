@@ -24,7 +24,7 @@ export default function EditActivity({ handleClose, activity }: any) {
     },
     typeOfActivity: '',
     aboutActivity: '',
-    spots: '',
+    spots: 0,
     telegramLink: '',
     createdBy: -1,
     UserActivityParticipations: [],
@@ -41,17 +41,17 @@ export default function EditActivity({ handleClose, activity }: any) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newActivity = {
-      title: formData.title || activity.title,
-      date: formData.date || activity.date,
-      meetingPoint: activity.meetingPoint,
-      coordinates: activity.coordinates,
-      typeOfActivity: formData.typeOfActivity || activity.typeOfActivity,
-      aboutActivity: formData.aboutActivity || activity.aboutActivity,
-      spots: formData.spots || activity.spots,
-      telegramLink: formData.telegramLink || activity.telegramLink,
-    } as ActivityInterface;
-    const activityUpdated = updateActivity(activity.id, newActivity);
+    // const newActivity = {
+    //   title: formData.title || activity.title,
+    //   date: formData.date || activity.date,
+    //   meetingPoint: activity.meetingPoint,
+    //   coordinates: activity.coordinates,
+    //   typeOfActivity: formData.typeOfActivity || activity.typeOfActivity,
+    //   aboutActivity: formData.aboutActivity || activity.aboutActivity,
+    //   spots: formData.spots || activity.spots,
+    //   telegramLink: formData.telegramLink || activity.telegramLink,
+    // } as ActivityInterface;
+    // const activityUpdated = updateActivity(activity.id, newActivity);
     handleClose();
     setFormData({
       id: '',
@@ -64,7 +64,7 @@ export default function EditActivity({ handleClose, activity }: any) {
       },
       typeOfActivity: '',
       aboutActivity: '',
-      spots: '',
+      spots: 0,
       telegramLink: '',
       createdBy: -1,
       UserActivityParticipations: [],

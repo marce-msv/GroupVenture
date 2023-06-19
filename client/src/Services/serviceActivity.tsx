@@ -2,30 +2,28 @@ import { ActivityInterface } from '../pages/AddActivityPage/AddActivityPage';
 
 let root = 'http://localhost:3333/';
 
+// USER ACTIVITY TO DO USER ID !
 export const postActivity = async (data: ActivityInterface, user: number) => {
   const withId = Object.assign({ createdBy: user }, data);
+
+  console.log(withId)
+  console.log(typeof withId.spots)
+  console.log(withId.spots)
+
   const response = await fetch(root + 'addactivity', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-
     body: JSON.stringify(withId),
   });
   return response.json();
 };
 
-// export function getActivities() {
-//   return fetch(root + 'activities/').then((response) => {
-//     if (!response.ok) {
-//       throw new Error('Activity not found');
-//     }
-//     return response.json();
-//   });
-// }
 export function getActivities() {
   return fetch(root + 'activities/')
     .then((res) => {
+      console.log(res);
       return res.json();
     })
     .then((res) => {

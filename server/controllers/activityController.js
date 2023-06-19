@@ -11,8 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const associations_1 = require("../models/associations");
 const postActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('heoeoe1');
+    console.log(req.body);
     const { title, date, meetingPoint, coordinates, typeOfActivity, aboutActivity, spots, telegramLink, createdBy, } = req.body;
     try {
+        console.log('heoeoe2');
         const activity = yield associations_1.Activity.create({
             title,
             date,
@@ -24,6 +27,7 @@ const postActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             telegramLink,
             createdBy,
         });
+        console.log('heoeoe3');
         const safeActivity = {
             title: activity.title,
             date: activity.date,
@@ -35,10 +39,12 @@ const postActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             telegramLink: activity.telegramLink,
             createdBy: activity.createdBy,
         };
+        console.log('heoeoe4');
         res.status(201).json(safeActivity);
+        console.log('heoeoe5');
     }
     catch (err) {
-        // console.log(err);
+        console.log(err);
         res.status(500).json({ message: err.message });
     }
 });

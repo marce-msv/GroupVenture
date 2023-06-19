@@ -20,14 +20,19 @@ export default function Profile() {
   const [isEditing, setEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    if (typeof id !== 'number') return;
-    getUserById(id)
-      .then((user: UserModel) => {
-        if (user) setProfileUser(user);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
+    console.log(id);
+
+    if (id) {
+      getUserById(id)
+        .then((user: UserModel) => {
+          // console.log(user);
+
+          if (user) setProfileUser(user);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -66,11 +71,7 @@ export default function Profile() {
     };
     return (
       <>
-        <MDBBtn
-          className='mx-2'
-          color='secondary'
-          onClick={handleEditClick}
-        >
+        <MDBBtn className="mx-2" color="secondary" onClick={handleEditClick}>
           {' '}
           Edit Profile
         </MDBBtn>
@@ -85,30 +86,25 @@ export default function Profile() {
 
   return (
     <div
-      className='mainDivForProfile'
+      className="mainDivForProfile"
       style={{
         backgroundImage: 'url(/pexels.jpeg)',
       }}
     >
-      <div className='profileBody'>
-        <div className='profileName'>
+      <div className="profileBody">
+        <div className="profileName">
           <strong>
             {profileUser?.firstName || ''} {profileUser?.lastName || ''}
           </strong>
         </div>
         {profileUser?.age ? `Age: ${profileUser.age}` : ''}
-        <div className='profileAvatar'>
-          {profileUser?.avatar && (
-            <img
-              src={profileUser?.avatar}
-              alt='Avatar'
-            />
-          )}
+        <div className="profileAvatar">
+          {profileUser?.avatar && <img src={profileUser?.avatar} alt="Avatar" />}
         </div>
-        <div className='infoAboutUser'>{profileUser?.infoAboutUser || ''}</div>
+        <div className="infoAboutUser">{profileUser?.infoAboutUser || ''}</div>
 
         <CreatedActivities />
-        <div className='btns'>{RenderEditables()}</div>
+        <div className="btns">{RenderEditables()}</div>
         {isEditing && (
           <EditProfile
             handleClose={handleClose}

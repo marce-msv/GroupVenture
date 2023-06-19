@@ -64,7 +64,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
     },
     typeOfActivity: '',
     aboutActivity: '',
-    spots: '',
+    spots: 0,
     telegramLink: '',
     UserActivityParticipations: [],
     id: '',

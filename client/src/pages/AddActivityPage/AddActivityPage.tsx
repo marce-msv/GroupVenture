@@ -20,7 +20,7 @@ export interface ActivityInterface {
   coordinates: Coordinates;
   typeOfActivity: string;
   aboutActivity: string;
-  spots: string;
+  spots: number;
   telegramLink: string;
   data?: any;
   createdBy: number;
@@ -46,7 +46,7 @@ export default function AddActivityPage() {
     },
     typeOfActivity: '',
     aboutActivity: '',
-    spots: '',
+    spots: 0,
     telegramLink: '',
     createdBy: 0,
     UserActivityParticipations: [],
@@ -108,7 +108,9 @@ export default function AddActivityPage() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postActivity(formData, uid);
+    const safeFormData = {...formData, spots: +formData.spots}
+
+    postActivity(safeFormData, uid);
     setFormData({
       title: '',
       date: '',
@@ -119,7 +121,7 @@ export default function AddActivityPage() {
       },
       typeOfActivity: '',
       aboutActivity: '',
-      spots: '',
+      spots: 0,
       telegramLink: '',
       createdBy: 0,
       UserActivityParticipations: [],

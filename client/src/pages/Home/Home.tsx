@@ -71,6 +71,7 @@ export default function Home() {
 
   const loadMarkers = async () => {
     try {
+      console.log('eo');
       const activities = await getActivities();
       console.log('Activities in home: ', activities);
       const filteredActivities = activities.data.filter(
