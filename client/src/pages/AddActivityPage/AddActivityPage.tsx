@@ -15,6 +15,8 @@ export interface ActivityInterface {
   aboutActivity: string;
   spots: string;
   telegramLink: string;
+  data?: any;
+  createdBy?: number
 }
 
 export default function AddActivityPage() {

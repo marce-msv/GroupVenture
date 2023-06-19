@@ -15,13 +15,21 @@ export const postActivity = async (data: ActivityInterface, user: number) => {
   return response.json();
 };
 
+// export function getActivities() {
+//   return fetch(root + 'activities/').then((response) => {
+//     if (!response.ok) {
+//       throw new Error('Activity not found');
+//     }
+//     return response.json();
+//   });
+// }
 export function getActivities() {
-  return fetch(root + 'activities/').then((response) => {
-    if (!response.ok) {
-      throw new Error('Activity not found');
-    }
-    return response.json();
-  });
+  return fetch(root + 'activities/')
+    .then((res) => res.json())
+    .then((res: ActivityInterface) => res)
+    .catch((error) => {
+      throw new Error('Activity not found', error);
+    });
 }
 
 export function getActivityById(id: string) {
