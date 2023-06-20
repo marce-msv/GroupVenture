@@ -111,7 +111,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
 
                   if (!creator) return;
                   setCreator(creator);
-                  const participants = users.filter((user: any) =>
+                  const participants = users.filter((user: UserInterface) =>
                     userParticipationIds.includes(user.id)
                   );
                   // console.log('participants', participants);
