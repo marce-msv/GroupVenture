@@ -20,6 +20,7 @@ const postUser = async (req: Request, res: Response) => {
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({ ...req.body, password: hash });
     let safeUser = {
+      id: user.id,
       avatar: user.avatar,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -71,7 +72,7 @@ const getUserInfo = async function (req: Request, res: Response) {
   try {
     let user = await User.findOne({ where: { id: req.params.id } });
     if (user) {
-            let safeUser = {
+      let safeUser = {
         id: req.params.id,
         avatar: user.avatar,
         firstName: user.firstName,
@@ -84,15 +85,19 @@ const getUserInfo = async function (req: Request, res: Response) {
     }
   } catch (err: any) {
     // console.log(err);
-    res.status(400).send({ error: '400', message: 'Bad user request' });;
+    res.status(400).send({ error: '400', message: 'Bad user request' });
   }
 };
 
 const editUser = async function (req: Request, res: Response) {
+  console.log(req.body);
+
   const { id } = req.body;
   try {
-    const usrUpdated = await User.findByPk(id);
-    res.status(200).json(usrUpdated);
+    const user = await User.findByPk(id);
+    console.log(user);
+    const userUpdated = await user?.update(req.body.info);
+    res.status(200).json(userUpdated);
   } catch (err: any) {
     console.log(err);
     res.status(500).json({ message: err.message });

@@ -27,6 +27,7 @@ const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const hash = yield bcrypt_1.default.hash(password, 10);
         const user = yield associations_1.User.create(Object.assign(Object.assign({}, req.body), { password: hash }));
         let safeUser = {
+            id: user.id,
             avatar: user.avatar,
             firstName: user.firstName,
             lastName: user.lastName,
@@ -91,16 +92,18 @@ const getUserInfo = function (req, res) {
         catch (err) {
             // console.log(err);
             res.status(400).send({ error: '400', message: 'Bad user request' });
-            ;
         }
     });
 };
 const editUser = function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(req.body);
         const { id } = req.body;
         try {
-            const usrUpdated = yield associations_1.User.findByPk(id);
-            res.status(200).json(usrUpdated);
+            const user = yield associations_1.User.findByPk(id);
+            console.log(user);
+            const userUpdated = yield (user === null || user === void 0 ? void 0 : user.update(req.body.info));
+            res.status(200).json(userUpdated);
         }
         catch (err) {
             console.log(err);

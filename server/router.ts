@@ -19,7 +19,7 @@ router.post('/login', usersController.login);
 router.post('/logout', usersController.logout);
 router.get('/profile/:id', usersController.getUserInfo);
 router.get('/profile/:id', authMiddleware, usersController.getUserInfo);
-// router.put('/profile/edit/:id', usersController.editUser);
+router.put('/profile/edit/:id', usersController.editUser);
 
 // Activity
 router.post('/addactivity', activityController.postActivity);

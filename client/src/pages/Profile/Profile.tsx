@@ -1,4 +1,3 @@
-import './Profile.css';
 import CreatedActivities from '../../components/CreatedActivities/CreatedActivities';
 import AddActivity from '../../components/AddActivity/AddActivity';
 import EditProfile from './EditProfile';
@@ -7,26 +6,31 @@ import { getUserById } from '../../Services/serviceUser';
 import { useParams } from 'react-router-dom';
 import { useUID } from '../../customHooks';
 import { MDBBtn } from 'mdb-react-ui-kit';
+import './Profile.css';
 
-// Can I import this from the server folders?
-import { UserModel } from '../../../../server/models/user';
+export interface UserInterface {
+  id?: number;
+  avatar: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  password: string;
+  email: string;
+  infoAboutUser: string;
+}
 
 export default function Profile() {
   const uid = useUID();
   const { id } = useParams();
   const [profileEdited, setProfileEdited] = useState<boolean>(false);
-  const [profileUser, setProfileUser] = useState<UserModel | null>(null);
-  const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [profileUser, setProfileUser] = useState<UserInterface | null>(null);
+  const [isEditable, setIsEditable] = useState<boolean>(true);
   const [isEditing, setEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(id);
-
     if (id) {
       getUserById(id)
-        .then((user: UserModel) => {
-          // console.log(user);
-
+        .then((user: UserInterface) => {
           if (user) setProfileUser(user);
         })
         .catch((error: any) => {
@@ -44,7 +48,7 @@ export default function Profile() {
   useEffect(() => {
     if (profileEdited && typeof id === 'number') {
       getUserById(id)
-        .then((user: UserModel) => {
+        .then((user: UserInterface) => {
           if (user) {
             setProfileUser(user);
             setProfileEdited(false);

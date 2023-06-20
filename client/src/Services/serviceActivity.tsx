@@ -4,11 +4,11 @@ let root = 'http://localhost:3333/';
 
 // USER ACTIVITY TO DO USER ID !
 export const postActivity = async (data: ActivityInterface, user: number) => {
-  const withId = Object.assign({ createdBy: user }, data);
+  // const withId = Object.assign({ createdBy: user }, data);
+  const withId = {...data, createdBy: user}
 
-  console.log(withId)
-  console.log(typeof withId.spots)
-  console.log(withId.spots)
+  // console.log(user);
+  // console.log(withId)
 
   const response = await fetch(root + 'addactivity', {
     method: 'POST',
@@ -23,11 +23,11 @@ export const postActivity = async (data: ActivityInterface, user: number) => {
 export function getActivities() {
   return fetch(root + 'activities/')
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res.json();
     })
     .then((res) => {
-      console.log('response in service: ', res);
+      // console.log('response in service: ', res);
       return res;
     })
     .catch((error) => {

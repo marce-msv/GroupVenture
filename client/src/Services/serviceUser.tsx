@@ -1,7 +1,6 @@
 import { FormDataInterface } from '../pages/Authentication/SignupPage';
 
-// Can I import this from the server folders?
-import { UserModel } from './../../../server/models/user';
+import { UserInterface } from '../pages/Profile/Profile';
 
 let root = 'http://localhost:3333/';
 
@@ -18,7 +17,7 @@ export const postUser = async (data: FormDataInterface) => {
 };
 
 export function getUserById(id: number | string) {
-  console.log('helo');
+  // console.log('hello');
   
   return fetch(root + 'profile/' + id, {
     method: 'GET',
@@ -29,7 +28,7 @@ export function getUserById(id: number | string) {
     if (!response.ok) {
       throw new Error('User not found');
     }
-    console.log(response);
+    // console.log(response);
     
     return response.json();
   });
@@ -61,7 +60,7 @@ export function login(user: { email: string; password: string }) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user),
   }).then((res) => {
-    console.log(res);
+    // console.log(res);
     if (res.ok) {
       return res.json();
     } else {
@@ -77,7 +76,7 @@ export function logout() {
     mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
   }).then((res) => {
-    console.log(res);
+    // console.log(res);
     if (res.ok) {
       return res.json();
     } else {
@@ -86,7 +85,7 @@ export function logout() {
   });
 }
 
-export function updateUser(id: number, info: FormDataInterface | UserModel) {
+export function updateUser(id: number, info: FormDataInterface | UserInterface) {
   return fetch(root + 'profile/edit/' + id, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },

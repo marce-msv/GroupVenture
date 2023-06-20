@@ -4,9 +4,6 @@ import { Request, Response, NextFunction } from 'express';
 import { Activity, UserActivityParticipation } from '../models/associations';
 
 const postActivity = async (req: Request, res: Response) => {
-  console.log('heoeoe1');
-  console.log(req.body);
-  
   const {
     title,
     date,
@@ -19,9 +16,6 @@ const postActivity = async (req: Request, res: Response) => {
     createdBy,
   } = req.body;
   try {
-    console.log('heoeoe2');
-
-
     const activity = await Activity.create({
       title,
       date,
@@ -33,7 +27,6 @@ const postActivity = async (req: Request, res: Response) => {
       telegramLink,
       createdBy,
     });
-    console.log('heoeoe3');
 
     const safeActivity = {
       title: activity.title,
@@ -46,10 +39,8 @@ const postActivity = async (req: Request, res: Response) => {
       telegramLink: activity.telegramLink,
       createdBy: activity.createdBy,
     };
-    console.log('heoeoe4');
 
     res.status(201).json(safeActivity);
-    console.log('heoeoe5');
   } catch (err: any) {
     console.log(err);
     res.status(500).json({ message: err.message });
@@ -135,7 +126,7 @@ const getActivityInfo = async function (req: Request, res: Response, next: NextF
 const deleteActivity = async function (req: Request, res: Response) {
   try {
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     if (!id)
       res.status(400).json({
         success: false,
@@ -152,13 +143,12 @@ const deleteActivity = async function (req: Request, res: Response) {
 
 const editActivity = async function (req: Request, res: Response) {
   const { id, info } = req.body;
-  console.log(req.body);
   try {
-    const rowsAffected = await Activity.update(info, { where: { id: id } });
-    const actUpdated = await Activity.findByPk(id);
-    res.status(200).json(actUpdated);
+    await Activity.update(info, { where: { id: id } });
+    const updatedActivity = await Activity.findByPk(id);
+    res.status(200).json(updatedActivity);
   } catch (err: any) {
-    // console.log(err);
+    console.log(err);
     res.status(500).json({ message: err.message });
   }
 };

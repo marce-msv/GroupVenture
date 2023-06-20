@@ -13,7 +13,9 @@ const associations_1 = require("../models/associations");
 const joinParticipant = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, activityId } = req.body;
-        console.log('here');
+        console.log(req.body.userId);
+        console.log(req.body.activityId);
+        console.log('here1');
         if (!userId || !activityId) {
             res.status(404).json({
                 success: false,
@@ -22,10 +24,12 @@ const joinParticipant = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
             });
             return next();
         }
+        console.log('here2');
         yield associations_1.UserActivityParticipation.create({
             userId,
             activityId,
         });
+        console.log('here3');
         res.status(200).json({
             success: true,
             data: null,

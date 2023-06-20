@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { postUser } from '../../Services/serviceUser';
 import './Authentication.css';
 
+import { Dispatch, SetStateAction } from 'react';
+
 export interface FormDataInterface {
   avatar: string | File | null;
   firstName: string;
@@ -14,7 +16,11 @@ export interface FormDataInterface {
   infoAboutUser: string;
 }
 
-export default function SignupPage() {
+export default function SignupPage({
+  setIsLoggedIn,
+}: {
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+}) {
   const [image, _setImage] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState<FormDataInterface>({
     avatar: null,
@@ -80,6 +86,8 @@ export default function SignupPage() {
       });
 
       const data = await response.json();
+      console.log(data, 'data are here');
+      
       const imageUrl = data.url;
 
       const user = {
@@ -92,7 +100,9 @@ export default function SignupPage() {
         infoAboutUser: formData.infoAboutUser,
       };
 
-      await postUser(user);
+      // await postUser(user);
+      const responsex = await postUser(user);
+      
 
       setFormData({
         avatar: null,
@@ -109,7 +119,13 @@ export default function SignupPage() {
         fileInput.value = '';
       }
 
-      navigate('/login');
+      // navigate('/login');
+      console.log(responsex);      
+      const uid = responsex.data.id;
+      localStorage.setItem('uid', uid);
+      setIsLoggedIn(true);
+      navigate(`/profile/${uid}`);
+
     } catch (error) {
       console.error('Error:', error);
       alert('An error occurred while uploading the image. Please try again.');

@@ -15,7 +15,7 @@ const Root = ({ setIsLoggedIn }: {setIsLoggedIn: Dispatch<SetStateAction<boolean
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
       <Route path="/logout" element={<Logout setIsLoggedIn={setIsLoggedIn} />} />
-      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/signup" element={<SignupPage setIsLoggedIn={setIsLoggedIn} />} />
       <Route path="/profile/:id" element={<Profile />} />
       <Route path="/addactivity" element={<AddActivityPage />} />
     </Routes>

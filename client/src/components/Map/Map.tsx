@@ -1,6 +1,6 @@
-import "./Map.css";
+import './Map.css';
 
-import { GoogleMap, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker } from '@react-google-maps/api';
 
 export interface Coordinates {
   lat: number | null;
@@ -15,16 +15,11 @@ interface MapProps {
   center?: google.maps.LatLngLiteral | undefined;
 }
 
-export default function Map({
-  markers,
-  onMarkerClick,
-  onMapClick,
-  center,
-}: MapProps) {
+export default function Map({ markers, onMarkerClick, onMapClick, center }: MapProps) {
   const mapContainerStyle = {
-    marginTop: "30px",
-    width: "100%",
-    height: "500px",
+    marginTop: '30px',
+    width: '100%',
+    height: '500px',
   };
 
   const centerCoordinates = {
@@ -52,8 +47,8 @@ export default function Map({
   };
 
   return (
-    <div className='mainbodyforMap'>
-      <div className='map'>
+    <div className="mainbodyforMap">
+      <div className="map">
         <GoogleMap
           onClick={onMapClick}
           mapContainerStyle={mapContainerStyle}

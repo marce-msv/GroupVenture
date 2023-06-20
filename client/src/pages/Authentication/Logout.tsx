@@ -28,7 +28,7 @@ export default function Logout({
       <div className="textDiv">
         <h2>Are you sure you want to log out? You won't be able to add an activities anymore</h2>
         <div className="btns">
-          <MDBBtn className="mx-2" color="info">
+          <MDBBtn className="mx-2" color="info" onClick={() => navigate('/')}>
             No
           </MDBBtn>
           <Link to="/">
