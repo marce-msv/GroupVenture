@@ -1,7 +1,7 @@
 import './App.css';
 import Root from './root';
 import NavBar from './components/NavBar/NavBar';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -11,10 +11,10 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
+      <BrowserRouter>
         <NavBar />
         <Root setIsLoggedIn={setIsLoggedIn} />
-      </Router>
+      </BrowserRouter>
     </div>
   );
 }

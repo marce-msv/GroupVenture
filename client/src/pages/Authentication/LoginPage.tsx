@@ -33,7 +33,7 @@ export default function LoginPage({
       setIsLoggedIn(true);
       navigate(`/profile/${uid}`);
     } catch (error) {
-      alert('Incorrect email or password');
+      //alert('Incorrect email or password');
     }
     setFormData(initialFormData);
   };
