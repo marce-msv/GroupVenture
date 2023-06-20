@@ -9,7 +9,7 @@ import { MDBBtn } from 'mdb-react-ui-kit';
 import './Profile.css';
 
 export interface UserInterface {
-  id?: number;
+  id: number;
   avatar: string;
   firstName: string;
   lastName: string;

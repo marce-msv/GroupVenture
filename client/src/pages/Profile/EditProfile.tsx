@@ -12,7 +12,6 @@ interface EditProfileProps {
   handleProfileEdit: () => void;
 }
 
-// ANY TO BE CHANGED
 const EditProfile = ({
   handleClose,
   profileUser,

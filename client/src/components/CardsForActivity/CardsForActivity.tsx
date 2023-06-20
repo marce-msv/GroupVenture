@@ -1,6 +1,17 @@
-import { updateUserActivity, updateUserActivityLeave } from '../../Services/serviceParticipants';
-import { MDBCardTitle, MDBCardSubTitle, MDBCardText, MDBBtn } from 'mdb-react-ui-kit';
-import { deleteActivityByID, getActivityById } from '../../Services/serviceActivity';
+import {
+  updateUserActivity,
+  updateUserActivityLeave,
+} from '../../Services/serviceParticipants';
+import {
+  MDBCardTitle,
+  MDBCardSubTitle,
+  MDBCardText,
+  MDBBtn,
+} from 'mdb-react-ui-kit';
+import {
+  deleteActivityByID,
+  getActivityById,
+} from '../../Services/serviceActivity';
 import { ActivityInterface } from '../../pages/AddActivityPage/AddActivityPage';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { getUserById, getUsersByIds } from '../../Services/serviceUser';
@@ -9,6 +20,7 @@ import { useUID } from '../../customHooks';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import './CardsForActivity.css';
+import { UserInterface } from '../../pages/Profile/Profile';
 
 export interface Coordinates {
   lat: number | null;
@@ -26,12 +38,15 @@ interface User {
   avatar: string;
   firstName: string;
   lastName: string;
-  age: string;
+  age: number;
   infoAboutUser: string;
-  id: string;
+  id: number;
 }
 
-const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) => {
+const CardsForActivity: React.FC<CardsForActivityProps> = ({
+  marker,
+  onClose,
+}) => {
   const [isOpen, setIsOpen] = useState(true);
   const [occupiedSpots, setOccupiedSpots] = useState(0);
   const [participants, setParticipants] = useState<User[]>([]);
@@ -57,9 +72,9 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
     avatar: '',
     firstName: '',
     lastName: '',
-    age: '',
+    age: 0,
     infoAboutUser: '',
-    id: '',
+    id: -1,
   });
 
   const uid = useUID();
@@ -76,23 +91,28 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
 
             if (activity.UserActivityParticipations) {
               // console.log(activity.UserActivityParticipations);
-              const userParticipationIds = activity.UserActivityParticipations.map(
-                (participation: any) => participation
-              );
-              // console.log('participantsIds', userParticipationIds);
+              const userParticipationIds =
+                activity.UserActivityParticipations.map(
+                  (participation: number) => participation
+                );
+              console.log('participantsIds', userParticipationIds);
 
               userIds.push(...userParticipationIds);
               // console.log('userIds 2', userIds);
 
               getUsersByIds(userIds)
-                .then((users: number[] | any) => {
-                  // console.log('users', users                  );
+                .then((users: UserInterface[]) => {
+                  console.log('users', users);
 
-                  const creator = users.find((user: any) => user.id == activity.createdBy);
-                  // console.log('creator', creator);
+                  const creator = users.find(
+                    (user: UserInterface) => user.id == activity.createdBy
+                  );
+                  console.log('creator', creator);
+
+                  if (!creator) return;
                   setCreator(creator);
                   const participants = users.filter((user: any) =>
-                    userParticipationIds.includes(+user.id)
+                    userParticipationIds.includes(user.id)
                   );
                   // console.log('participants', participants);
 
@@ -107,7 +127,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
                 });
             } else {
               getUserById(activity.createdBy)
-                .then((user: any) => {
+                .then((user: UserInterface) => {
                   if (user) {
                     setCreator(user);
                   }
@@ -147,17 +167,18 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
     updateUserActivity(participantsData)
       .then((response) => {
         setOccupiedSpots((prevSpots) => prevSpots + 1);
-        getUsersByIds([activity.createdBy, ...activity.UserActivityParticipations]).then(
-          (users: any) => {
-            const userParticipationIds = activity.UserActivityParticipations.map(
-              (participation: any) => participation.userId
-            );
-            const updatedParticipants = users.filter((user: any) =>
-              userParticipationIds.includes(user.id)
-            );
-            setParticipants(updatedParticipants);
-          }
-        );
+        getUsersByIds([
+          activity.createdBy,
+          ...activity.UserActivityParticipations,
+        ]).then((users) => {
+          const userParticipationIds = activity.UserActivityParticipations.map(
+            (participation) => participation
+          );
+          const updatedParticipants = users.filter((user: UserInterface) =>
+            userParticipationIds.includes(user.id)
+          );
+          setParticipants(updatedParticipants);
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -173,7 +194,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
     updateUserActivityLeave(participantsData)
       .then((response) => {
         setParticipants((prevParticipants) =>
-          prevParticipants.filter((participant) => parseInt(participant.id) !== uid)
+          prevParticipants.filter((participant) => participant.id !== uid)
         );
         setIsUserParticipant(false);
         setOccupiedSpots((prevSpots) => prevSpots - 1);
@@ -194,20 +215,30 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
   };
 
   if (isEditing) {
-    return <EditActivity handleClose={handleClose} activity={activity} />;
+    return (
+      <EditActivity
+        handleClose={handleClose}
+        activity={activity}
+      />
+    );
   }
 
   return (
-    <div className="card">
-      <div className="button-section">
-        <MDBBtn className="delete-button" onClick={handleClose}>
+    <div className='card'>
+      <div className='button-section'>
+        <MDBBtn
+          className='delete-button'
+          onClick={handleClose}
+        >
           ✕
         </MDBBtn>
       </div>
-      <div className="activity-details">
-        <div className="activity-info">
+      <div className='activity-details'>
+        <div className='activity-info'>
           <MDBCardTitle>{activity.title}</MDBCardTitle>
-          <MDBCardSubTitle>{moment(activity.date).format('llll')}</MDBCardSubTitle>
+          <MDBCardSubTitle>
+            {moment(activity.date).format('llll')}
+          </MDBCardSubTitle>
           <MDBCardText>
             <strong>Type of activity:</strong> {activity.typeOfActivity}
           </MDBCardText>
@@ -222,19 +253,22 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
           </MDBCardText>
         </div>
         <Link to={`/profile/${creator.id}`}>
-          <div className="created-by">
-            <div className="createdText">
+          <div className='created-by'>
+            <div className='createdText'>
               {' '}
               Created by: <span>{creator.firstName} </span>
             </div>
-            <div className="avatar">
+            <div className='avatar'>
               {' '}
-              <img src={creator?.avatar} alt="Avatar" />
+              <img
+                src={creator?.avatar}
+                alt='Avatar'
+              />
             </div>
           </div>
         </Link>
       </div>
-      <div className="participants">
+      <div className='participants'>
         {participants.length ? (
           <div>
             <strong>Already joined:</strong>
@@ -251,26 +285,40 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
           <div>No participants yet</div>
         )}
       </div>
-      <div className="button-section">
-        {uid !== parseInt(creator.id) && (
+      <div className='button-section'>
+        {uid !== creator.id && (
           <>
             {isUserParticipant ? (
-              <MDBBtn color="danger" onClick={leaveActivity}>
+              <MDBBtn
+                color='danger'
+                onClick={leaveActivity}
+              >
                 Leave
               </MDBBtn>
             ) : (
-              <MDBBtn color="success" onClick={joinActivity}>
+              <MDBBtn
+                color='success'
+                onClick={joinActivity}
+              >
                 Join
               </MDBBtn>
             )}
           </>
         )}
-        {uid === parseInt(creator.id) && (
-          <div className="btns">
-            <MDBBtn className="me-2 width-btn" color="info" onClick={editActivity}>
+        {uid === creator.id && (
+          <div className='btns'>
+            <MDBBtn
+              className='me-2 width-btn'
+              color='info'
+              onClick={editActivity}
+            >
               EDIT
             </MDBBtn>
-            <MDBBtn className="me-1 width-btn" color="danger" onClick={deleteActivity}>
+            <MDBBtn
+              className='me-1 width-btn'
+              color='danger'
+              onClick={deleteActivity}
+            >
               Delete
             </MDBBtn>
           </div>
