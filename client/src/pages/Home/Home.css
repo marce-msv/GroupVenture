@@ -20,6 +20,7 @@
 }
 
 .mapHomePage {
+  position: relative;
   height: 60%;
 }
 .search-form {

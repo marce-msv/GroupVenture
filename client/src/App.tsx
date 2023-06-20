@@ -1,20 +1,16 @@
-import "./App.css";
-import Root from "./root";
-import NavBar from "./components/NavBar/NavBar";
-import { BrowserRouter as Router } from "react-router-dom";
-import { useState, useEffect } from "react";
+import './App.css';
+import Root from './root';
+import NavBar from './components/NavBar/NavBar';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function App() {
-
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
- useEffect(() => {
-  // console.log('Navbar updating for Log in / out ?');
-  
- },[isLoggedIn])
+  useEffect(() => {}, [isLoggedIn]);
 
   return (
-    <div className='App'>
+    <div className="App">
       <Router>
         <NavBar />
         <Root setIsLoggedIn={setIsLoggedIn} />
