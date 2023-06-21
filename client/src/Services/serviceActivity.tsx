@@ -2,13 +2,8 @@ import { ActivityInterface } from '../pages/AddActivityPage/AddActivityPage';
 
 let root = 'http://localhost:3333/';
 
-// USER ACTIVITY TO DO USER ID !
 export const postActivity = async (data: ActivityInterface, user: number) => {
-  // const withId = Object.assign({ createdBy: user }, data);
-  const withId = {...data, createdBy: user}
-
-  // console.log(user);
-  // console.log(withId)
+  const withId = { ...data, createdBy: user };
 
   const response = await fetch(root + 'addactivity', {
     method: 'POST',
@@ -23,11 +18,9 @@ export const postActivity = async (data: ActivityInterface, user: number) => {
 export function getActivities() {
   return fetch(root + 'activities/')
     .then((res) => {
-      // console.log(res);
       return res.json();
     })
     .then((res) => {
-      // console.log('response in service: ', res);
       return res;
     })
     .catch((error) => {

@@ -13,11 +13,9 @@ jest.mock('../../Services/serviceUser', () => ({
 }));
 
 describe('SignUp Page', () => {
-  //
   it('Has input fields and signup button', () => {
-    //
     render(<SignupPage />);
-    //
+
     const fitstNameInput = screen.getByLabelText(/First name/);
     const lastNameInput = screen.getByLabelText(/Last Name/);
     const ageInput = screen.getByLabelText(/Age/);
@@ -25,7 +23,7 @@ describe('SignUp Page', () => {
     const passwordInput = screen.getByLabelText(/Password/);
     const infoInput = screen.getByLabelText(/Info about you/);
     const submitButton = screen.getByTestId('sign-up-btn');
-    //
+
     expect(fitstNameInput).toBeInTheDocument();
     expect(lastNameInput).toBeInTheDocument();
     expect(ageInput).toBeInTheDocument();
@@ -36,11 +34,9 @@ describe('SignUp Page', () => {
   });
 
   it('Allows user to create an account', async () => {
-    //
     const setIsLoggedIn = jest.fn();
     render(<SignupPage setIsLoggedIn={setIsLoggedIn} />);
-    //
-    // const imageInput = screen.getByTestId('upload-pic');
+
     const firstNameInput = screen.getByLabelText(/First name/);
     const lastNameInput = screen.getByLabelText(/Last Name/);
     const ageInput = screen.getByLabelText(/Age/);
@@ -48,9 +44,8 @@ describe('SignUp Page', () => {
     const passwordInput = screen.getByLabelText(/Password/);
     const infoInput = screen.getByLabelText(/Info about you/);
     const submitButton = screen.getByTestId('sign-up-btn');
-    //
+
     act(() => {
-      // userEvent.upload(imageInput, 'url...')
       userEvent.type(firstNameInput, 'Testing');
       userEvent.type(lastNameInput, 'FE');
       userEvent.type(ageInput, '5');
@@ -58,7 +53,7 @@ describe('SignUp Page', () => {
       userEvent.type(passwordInput, 'h');
       userEvent.type(infoInput, 'h0h0h0h0h0h0h0h0h0');
     });
-    //
+
     await waitFor(() => {
       expect(firstNameInput).toHaveValue('Testing');
       expect(lastNameInput).toHaveValue('FE');
@@ -67,11 +62,11 @@ describe('SignUp Page', () => {
       expect(passwordInput).toHaveValue('h');
       expect(infoInput).toHaveValue('h0h0h0h0h0h0h0h0h0');
     });
-    //
+
     act(() => {
       userEvent.click(submitButton);
     });
-    //
+
     await waitFor(() => {
       expect(setIsLoggedIn).toHaveBeenCalledWith(true);
     });

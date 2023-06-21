@@ -6,20 +6,23 @@ import { useUID } from '../../customHooks';
 import { useParams } from 'react-router-dom';
 
 const CreatedActivities = () => {
-  const [createdActivities, setCreatedActivities] = useState<ActivityInterface[]>([]);
+  const [createdActivities, setCreatedActivities] = useState<
+    ActivityInterface[]
+  >([]);
 
   const uid = useUID();
   const { id } = useParams();
 
   useEffect(() => {
     const fetchActivities = async () => {
-      // if (typeof id !== 'number') return;
       if (id) {
         try {
           const activities = await getActivities();
-          const filteredActivities = activities.data.filter((activity: ActivityInterface) => {
-            return activity.createdBy === +id;
-          });
+          const filteredActivities = activities.data.filter(
+            (activity: ActivityInterface) => {
+              return activity.createdBy === +id;
+            }
+          );
           setCreatedActivities(filteredActivities);
         } catch (error) {
           console.error(error);
@@ -32,9 +35,9 @@ const CreatedActivities = () => {
   return (
     <>
       {createdActivities.length > 0 && (
-        <div className="createdActv">
-          <div className="created-activities-title"> Created activities:</div>
-          <div className="activity-list">
+        <div className='createdActv'>
+          <div className='created-activities-title'> Created activities:</div>
+          <div className='activity-list'>
             {createdActivities.map((activity, index) => (
               <div key={activity.id}>
                 <span>

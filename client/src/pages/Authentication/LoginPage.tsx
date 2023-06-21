@@ -58,6 +58,18 @@ export default function LoginPage({
     navigate('/signup');
   };
 
+  const notify = () =>
+    toast.error('Sorry Anna forgot to turn on the server 😢', {
+      position: 'bottom-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    });
+
   return (
     <MDBContainer fluid>
       <MDBRow>
@@ -102,6 +114,7 @@ export default function LoginPage({
                 <a
                   className='text-muted'
                   href='#!'
+                  onClick={notify}
                 >
                   Forgot password?
                 </a>

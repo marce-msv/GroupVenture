@@ -23,7 +23,6 @@ export interface ActivityInterface {
   aboutActivity: string;
   spots: number;
   telegramLink: string;
-  // data?: any;
   createdBy: number;
   UserActivityParticipations: number[];
 }
@@ -166,13 +165,6 @@ export default function AddActivityPage() {
             lng: location.lng(),
           },
         });
-        // console.log('Selected place:', address);
-        // console.log('Location:', location.lat(), location.lng());
-
-        // const marker = new google.maps.Marker({
-        //   position: location,
-        //   map: mapRef.current,
-        // });
       } else {
         setFormData({
           ...formData,
@@ -180,8 +172,6 @@ export default function AddActivityPage() {
         });
       }
     });
-
-    // console.log('Map clicked:', event.latLng.lat(), event.latLng.lng());
   };
 
   return (
