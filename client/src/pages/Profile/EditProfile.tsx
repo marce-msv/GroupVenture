@@ -12,11 +12,7 @@ interface EditProfileProps {
   handleProfileEdit: () => void;
 }
 
-const EditProfile = ({
-  handleClose,
-  profileUser,
-  handleProfileEdit,
-}: EditProfileProps) => {
+const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: EditProfileProps) => {
   const initialFormData = {
     avatar: null,
     firstName: '',
@@ -32,13 +28,11 @@ const EditProfile = ({
 
   const uid = useUID();
 
-  useEffect(() => {
-    console.log('useeffffect');
-  }, []);
+  // useEffect(() => {
+  //   console.log('useeffffect');
+  // }, []);
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target.id === 'avatar' && e.target instanceof HTMLInputElement) {
       const file = e.target.files?.[0];
       setFormData({
@@ -65,28 +59,32 @@ const EditProfile = ({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // UPDATE PICTURE TO BE FIXED
-    // const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dpzz6vn2w/upload';
-    // const cloudinaryUploadPreset = 'AleCloud';
+    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dpzz6vn2w/upload';
+    const cloudinaryUploadPreset = 'AleCloud';
 
-    // const formDataToUpload = new FormData();
-    // formDataToUpload.append('file', formData.avatar || '');
-    // formDataToUpload.append('upload_preset', cloudinaryUploadPreset);
+    const formDataToUpload = new FormData();
+    formDataToUpload.append('file', formData.avatar || '');
+    formDataToUpload.append('upload_preset', cloudinaryUploadPreset);
 
     try {
-      // const response = await fetch(cloudinaryUrl, {
-      //   method: 'POST',
-      //   body: formDataToUpload,
-      // });
+      let imageUrl = null;
 
-      // const data = await response.json();
-      // console.log(data, 'data are here');
-      // const imageUrl = data.url;
+      if (formData.avatar !== null) {
+        const response = await fetch(cloudinaryUrl, {
+          method: 'POST',
+          body: formDataToUpload,
+        });
+        const data = await response.json();
+        imageUrl = data.url;
+      }
 
       if (!profileUser) return; // TODO revisar esta logica
 
+      console.log('user', profileUser);
+      console.log('formdata', formData);
+
       const user: UserInterface | FormDataInterface = {
-        avatar: formData.avatar || profileUser.avatar,
+        avatar: formData.avatar !== null ? imageUrl : profileUser.avatar,
         firstName: formData.firstName || profileUser.firstName,
         lastName: formData.lastName || profileUser.lastName,
         email: formData.email || profileUser.email,
@@ -112,104 +110,89 @@ const EditProfile = ({
   };
 
   return (
-    <div className='editProfileContainer'>
-      <div className='chnageBody'>
-        <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-2'>
+    <div className="editProfileContainer">
+      <div className="chnageBody">
+        <div className="d-flex flex-column justify-content-center h-custom-2 w-75 pt-2">
           <form onSubmit={handleSubmit}>
-            <div className='mb-2 mx-5 w-100'>
+            <div className="mb-2 mx-5 w-100">
               <div>Here you can edit your profile info</div>
-              <div className=' d-flex justify-content-center'>
-                <div className='profileAvatar'>
+              <div className=" d-flex justify-content-center">
+                <div className="profileAvatar">
                   {formData.avatar || profileUser?.avatar ? (
-                    <img
-                      src={image}
-                      alt='img'
-                    />
+                    <img src={image} alt="img" />
                   ) : (
-                    <div className='altTextContainer'>
+                    <div className="altTextContainer">
                       <div>Choose your profile picture</div>
                     </div>
                   )}
                 </div>
               </div>
               <MDBInput
-                id='avatar'
-                type='file'
-                size='lg'
-                accept='image/*'
+                id="avatar"
+                type="file"
+                size="lg"
+                accept="image/*"
                 onChange={handleChange}
               />
             </div>
             <MDBInput
-              wrapperClass='mb-2 mx-5 w-100'
-              label='First name'
-              id='firstName'
-              type='text'
-              size='lg'
+              wrapperClass="mb-2 mx-5 w-100"
+              label="First name"
+              id="firstName"
+              type="text"
+              size="lg"
               defaultValue={formData.firstName || profileUser?.firstName || ''}
               onChange={handleChange}
             />
             <MDBInput
-              wrapperClass='mb-2 mx-5 w-100'
-              label='Last Name'
-              id='lastName'
-              type='text'
-              size='lg'
+              wrapperClass="mb-2 mx-5 w-100"
+              label="Last Name"
+              id="lastName"
+              type="text"
+              size="lg"
               defaultValue={formData.lastName || profileUser?.lastName || ''}
               onChange={handleChange}
             />
             <MDBInput
-              wrapperClass='mb-2 mx-5 w-100'
-              label='Age'
-              id='age'
-              type='number'
-              size='lg'
-              min='0'
+              wrapperClass="mb-2 mx-5 w-100"
+              label="Age"
+              id="age"
+              type="number"
+              size="lg"
+              min="0"
               defaultValue={formData.age || profileUser?.age || ''}
               onChange={handleChange}
             />
             <MDBTextArea
-              wrapperClass='mb-2 mx-5 w-100'
-              label='Info about you'
-              id='infoAboutUser'
-              size='lg'
-              defaultValue={
-                formData.infoAboutUser || profileUser?.infoAboutUser || ''
-              }
+              wrapperClass="mb-2 mx-5 w-100"
+              label="Info about you"
+              id="infoAboutUser"
+              size="lg"
+              defaultValue={formData.infoAboutUser || profileUser?.infoAboutUser || ''}
               onChange={handleChange}
             />
             <MDBInput
-              wrapperClass='mb-2 mx-5 w-100'
-              label='Email address'
-              id='email'
-              type='email'
-              size='lg'
+              wrapperClass="mb-2 mx-5 w-100"
+              label="Email address"
+              id="email"
+              type="email"
+              size="lg"
               defaultValue={formData.email || profileUser?.email || ''}
               onChange={handleChange}
             />
             <MDBInput
-              wrapperClass='mb-2 mx-5 w-100'
-              label='Password'
-              id='password'
-              type='password'
-              size='lg'
+              wrapperClass="mb-2 mx-5 w-100"
+              label="Password"
+              id="password"
+              type="password"
+              size="lg"
               defaultValue={formData.password || profileUser?.password || ''}
               onChange={handleChange}
             />
-            <MDBBtn
-              className='mb-2 px-4 mx-5 w-100'
-              color='info'
-              size='lg'
-              type='submit'
-            >
+            <MDBBtn className="mb-2 px-4 mx-5 w-100" color="info" size="lg" type="submit">
               Submit Changes
             </MDBBtn>
-            <MDBBtn
-              className='mb-2 px-4 mx-5 w-100'
-              color='danger'
-              size='lg'
-              onClick={handleClose}
-            >
+            <MDBBtn className="mb-2 px-4 mx-5 w-100" color="danger" size="lg" onClick={handleClose}>
               Close
             </MDBBtn>
           </form>

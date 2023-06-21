@@ -20,7 +20,7 @@ app.use((0, express_session_1.default)({
         sameSite: true,
         maxAge: 1000 * 60 * 60 * 60,
     },
-    secret: 'your_secret_key',
+    secret: process.env.SECRET || 'your_secret_key',
     resave: false,
     saveUninitialized: false,
 }));

@@ -17,8 +17,6 @@ export const postUser = async (data: FormDataInterface) => {
 };
 
 export function getUserById(id: number | string) {
-  // console.log('hello');
-  
   return fetch(root + 'profile/' + id, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -28,9 +26,7 @@ export function getUserById(id: number | string) {
     if (!response.ok) {
       throw new Error('User not found');
     }
-    // console.log(response);
-    
-    return response.json();
+        return response.json();
   });
 }
 
@@ -60,7 +56,6 @@ export function login(user: { email: string; password: string }) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user),
   }).then((res) => {
-    // console.log(res);
     if (res.ok) {
       return res.json();
     } else {
@@ -76,7 +71,6 @@ export function logout() {
     mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
   }).then((res) => {
-    // console.log(res);
     if (res.ok) {
       return res.json();
     } else {

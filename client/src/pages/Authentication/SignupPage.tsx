@@ -16,21 +16,23 @@ export interface FormDataInterface {
   infoAboutUser: string;
 }
 
+const initialFormData = {
+  avatar: null,
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  age: 0,
+  infoAboutUser: '',
+}
+
 export default function SignupPage({
   setIsLoggedIn,
 }: {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [image, _setImage] = useState<string | undefined>(undefined);
-  const [formData, setFormData] = useState<FormDataInterface>({
-    avatar: null,
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    age: 0,
-    infoAboutUser: '',
-  });
+  const [image, _setImage] = useState<string>();
+  const [formData, setFormData] = useState<FormDataInterface>(initialFormData);
 
   const navigate = useNavigate();
 
@@ -101,15 +103,7 @@ export default function SignupPage({
 
       const responsex = await postUser(user);
 
-      setFormData({
-        avatar: null,
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        age: 0,
-        infoAboutUser: '',
-      });
+      setFormData(initialFormData);
 
       const fileInput = document.getElementById('avatar') as HTMLInputElement;
       if (fileInput) {

@@ -97,11 +97,19 @@ const getUserInfo = function (req, res) {
 };
 const editUser = function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { id } = req.body;
+        const { id, info } = req.body;
         try {
             const user = yield associations_1.User.findByPk(id);
-            console.error(user);
-            const userUpdated = yield (user === null || user === void 0 ? void 0 : user.update(req.body.info));
+            if (!user)
+                return;
+            let userUpdated = {};
+            if (info.password) {
+                const hash = yield bcrypt_1.default.hash(info.password, 10);
+                userUpdated = yield user.update(Object.assign(Object.assign({}, req.body.info), { password: hash }));
+            }
+            else {
+                userUpdated = yield user.update(req.body.info);
+            }
             res.status(200).json(userUpdated);
         }
         catch (err) {

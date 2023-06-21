@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const port = 3333;
+        const port = process.env.SERVER_PORT || 3333;
         app_1.default.listen(port, () => {
             console.log(`Server listening on port ${port}`);
         });

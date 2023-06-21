@@ -53,7 +53,6 @@ export default function Profile() {
             setProfileUser(user);
             setProfileEdited(false);
           }
-          console.log(user);
         })
         .catch((error: any) => {
           console.error(error);

@@ -92,11 +92,17 @@ const getUserInfo = async function (req: Request, res: Response) {
 };
 
 const editUser = async function (req: Request, res: Response) {
-  const { id } = req.body;
+  const { id, info } = req.body;
   try {
     const user = await User.findByPk(id);
-    console.error(user);
-    const userUpdated = await user?.update(req.body.info);
+    if (!user) return
+    let userUpdated = {};
+    if (info.password) {
+      const hash = await bcrypt.hash(info.password, 10)
+      userUpdated = await user.update({...req.body.info, password: hash});
+    } else {
+      userUpdated = await user.update(req.body.info);
+    }
     res.status(200).json(userUpdated);
   } catch (err: any) {
     console.error(err);

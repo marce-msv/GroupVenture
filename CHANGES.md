@@ -39,9 +39,9 @@
 
 ### Profile
 - [x] Edit password in the profile page does not show you the encrypted password as a string
-- [ ] Edit profile submit changes should take you back to profile sooner, it takes 5 seconds?!
-- [ ] Once you edit the profile, the user information shows the updated data
-- [ ] Edit profile change picture does not work
+- [x] Edit password encrypts new password
+- [x] Once you edit the profile, the user information shows the updated data
+- [x] Edit profile change picture working
 
 ### Activities
 - [x] Add activity pages redirects you to home page
