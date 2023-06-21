@@ -26,10 +26,14 @@ Run the server in the back end and start the app in the front end
   ```
 
 ## Comments and support
-Feedback or suggestions are welcome. Please get in touch via pull request or email.
+Feedback or suggestions are welcome. <br> Please get in touch via pull request or email.
 
 ## Screenshots
-/Log In page
-/Sign Up page
-/Home page
-/Card activity
+*Home page*
+![Home page screenshot](./screenshots/homepage.jpg)
+*Log In page*
+![Login page screenshot](./screenshots/loginpage.jpg)
+*Sign Up page*
+![Signup page screenshot](./screenshots/signuppage.jpg)
+*Activity card*
+![Activity card screenshot](./screenshots/activitycard.jpg)
