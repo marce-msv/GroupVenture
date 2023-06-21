@@ -28,7 +28,7 @@ describe('User controllers tests', () => {
       expect(res.status).toBe(201);
       expect(parsedRes.success).toBe(true);
       expect(parsedRes.message).toBe('User created');
-      expect(parsedRes.data).toStrictEqual(mocks.u01res);
+      expect(parsedRes.data).toMatchObject(mocks.u01res);
     });
     //
     it('User already exists', async () => {

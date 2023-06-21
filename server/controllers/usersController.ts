@@ -1,3 +1,5 @@
+'use strict';
+
 import bcrypt from 'bcrypt';
 import { User } from '../models/associations';
 import { UserModel } from '../models/user';
@@ -34,7 +36,7 @@ const postUser = async (req: Request, res: Response) => {
       message: 'User created',
     });
   } catch (err: any) {
-    // console.log(err);
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -53,7 +55,7 @@ const login = async (req: Request, res: Response) => {
 
     res.status(200).send({ success: true, data: user.id, message: 'OK' });
   } catch (err: any) {
-    // console.log(err);
+    console.log(err);
     res.status(401).send({ error: '401', message: 'Username or password is incorrect' });
   }
 };
@@ -84,22 +86,20 @@ const getUserInfo = async function (req: Request, res: Response) {
       res.status(200).json(safeUser);
     }
   } catch (err: any) {
-    // console.log(err);
+    console.error(err);
     res.status(400).send({ error: '400', message: 'Bad user request' });
   }
 };
 
 const editUser = async function (req: Request, res: Response) {
-  console.log(req.body);
-
   const { id } = req.body;
   try {
     const user = await User.findByPk(id);
-    console.log(user);
+    console.error(user);
     const userUpdated = await user?.update(req.body.info);
     res.status(200).json(userUpdated);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };

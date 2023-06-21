@@ -1,13 +1,11 @@
+'use strict';
+
 import { Request, Response, NextFunction } from 'express';
 import { UserActivityParticipation } from '../models/associations';
 
 const joinParticipant = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId, activityId } = req.body;
-    console.log(req.body.userId);
-    console.log(req.body.activityId);
-    
-    console.log('here1');
     if (!userId || !activityId) {
       res.status(404).json({
         success: false,
@@ -17,13 +15,11 @@ const joinParticipant = async (req: Request, res: Response, next: NextFunction) 
       return next();
     }
 
-    console.log('here2');
     await UserActivityParticipation.create({
       userId,
       activityId,
     });
 
-    console.log('here3');
     res.status(200).json({
       success: true,
       data: null,

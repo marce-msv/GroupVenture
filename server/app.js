@@ -26,8 +26,5 @@ app.use((0, express_session_1.default)({
 }));
 app.use((0, cors_1.default)(corsConfig));
 app.use(express_1.default.json());
-app.use('/', router_js_1.default);
-app.get('*', (req, res) => {
-    res.status(404).send('Sorry, not found 😞');
-});
+app.use(router_js_1.default);
 exports.default = app;

@@ -38,7 +38,7 @@ const postActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(201).json(safeActivity);
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ message: err.message });
     }
 });
@@ -102,7 +102,7 @@ const getActivityInfo = function (req, res, next) {
             res.status(200).json(newActivity);
         }
         catch (err) {
-            // console.log(err);
+            console.error(err);
             res.status(500).json({ message: err.message });
         }
     });
@@ -111,7 +111,6 @@ const deleteActivity = function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const id = req.params.id;
-            // console.log(id);
             if (!id)
                 res.status(400).json({
                     success: false,
@@ -122,7 +121,7 @@ const deleteActivity = function (req, res) {
             res.json(activity);
         }
         catch (err) {
-            // console.log(err);
+            console.error(err);
             res.status(400).json({ message: err.message });
         }
     });
@@ -136,7 +135,7 @@ const editActivity = function (req, res) {
             res.status(200).json(updatedActivity);
         }
         catch (err) {
-            console.log(err);
+            console.error(err);
             res.status(500).json({ message: err.message });
         }
     });

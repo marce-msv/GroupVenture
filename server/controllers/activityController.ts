@@ -42,7 +42,7 @@ const postActivity = async (req: Request, res: Response) => {
 
     res.status(201).json(safeActivity);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -118,7 +118,7 @@ const getActivityInfo = async function (req: Request, res: Response, next: NextF
 
     res.status(200).json(newActivity);
   } catch (err: any) {
-    // console.log(err);
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -126,7 +126,6 @@ const getActivityInfo = async function (req: Request, res: Response, next: NextF
 const deleteActivity = async function (req: Request, res: Response) {
   try {
     const id = req.params.id;
-    // console.log(id);
     if (!id)
       res.status(400).json({
         success: false,
@@ -136,7 +135,7 @@ const deleteActivity = async function (req: Request, res: Response) {
     let activity = await Activity.destroy({ where: { id: id } });
     res.json(activity);
   } catch (err: any) {
-    // console.log(err);
+    console.error(err);
     res.status(400).json({ message: err.message });
   }
 };
@@ -148,7 +147,7 @@ const editActivity = async function (req: Request, res: Response) {
     const updatedActivity = await Activity.findByPk(id);
     res.status(200).json(updatedActivity);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };

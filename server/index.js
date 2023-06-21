@@ -13,19 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
-const modelDB_1 = __importDefault(require("./models/modelDB"));
-// Sync models with database and connect to server
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield modelDB_1.default.sync();
-        console.log('Connected to the db at port 5432');
-        // Start server
         const port = 3333;
         app_1.default.listen(port, () => {
             console.log(`Server listening on port ${port}`);
         });
     }
     catch (error) {
-        console.error('NOT CONNECTED to the database:', error);
+        console.error('Not connected to server:', error);
     }
 }))();
