@@ -10,13 +10,33 @@ export default function AddActivity() {
   return (
     <div>
       {uid ? (
-        <MDBBtn color="info" onClick={() => navigate('/addactivity')}>
+        <MDBBtn
+          color='info'
+          onClick={() => navigate('/addactivity')}
+        >
           Add an activity
         </MDBBtn>
       ) : (
-        <p className="testBlock" style={{ fontWeight: 'bold', fontSize: '20px' }}>
-          To access detailed information about activities, please log in to your account.{' '}
-          <Link to="/login">Log in</Link> or <Link to="/signup">Sign up</Link> to get started.
+        <p
+          className='testBlock'
+          style={{ fontWeight: 'bold', fontSize: '20px' }}
+        >
+          To access detailed information about activities, please log in to your
+          account.{' '}
+          <Link
+            to='/login'
+            className='activity-link'
+          >
+            Log in
+          </Link>{' '}
+          or{' '}
+          <Link
+            className='activity-link'
+            to='/signup'
+          >
+            Sign up
+          </Link>{' '}
+          to get started.
         </p>
       )}
     </div>

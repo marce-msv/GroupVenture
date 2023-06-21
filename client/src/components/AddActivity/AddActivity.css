@@ -4,4 +4,13 @@ p {
 .testBlock {
 background-color: rgba(0, 0, 0, 0.364);
 border-radius: 7px;
+padding: 1rem;
+}
+
+.activity-link{
+    color: rgb(53, 220, 220);
+}
+.activity-link:hover {
+    text-decoration: underline;
+    color: rgb(54, 178, 178);
 }

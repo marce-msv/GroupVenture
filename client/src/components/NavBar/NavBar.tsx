@@ -22,7 +22,9 @@ export default function NavBar() {
             fontWeight: 'cursive',
           }}
         >
-          <Link to='/'>GroupVenture</Link>
+          <Link to='/'>
+            <h2>GroupVenture</h2>
+          </Link>
           <span className='material-symbols-outlined'>diversity_3</span>
         </div>
         <li>
