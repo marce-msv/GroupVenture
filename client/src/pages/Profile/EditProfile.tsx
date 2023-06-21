@@ -5,6 +5,7 @@ import { updateUser } from '../../Services/serviceUser';
 import { useUID } from '../../customHooks';
 import './Profile.css';
 import { UserInterface } from './Profile';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface EditProfileProps {
   handleClose: () => void;
@@ -98,7 +99,19 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: EditProfil
       handleProfileEdit();
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred while uploading the image. Please try again.');
+      toast.warn(
+        'An error occurred while uploading the image. Please try again.',
+        {
+          position: 'bottom-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        }
+      );
     }
   };
 

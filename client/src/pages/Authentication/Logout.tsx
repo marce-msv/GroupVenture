@@ -20,19 +20,30 @@ export default function Logout({
 
   return (
     <div
-      className="mainPage"
+      className='mainPage'
       style={{
         backgroundImage: 'url(/pexels.jpeg)',
       }}
     >
-      <div className="textDiv">
-        <h2>Are you sure you want to log out? You won't be able to add an activities anymore</h2>
-        <div className="btns">
-          <MDBBtn className="mx-2" color="info" onClick={() => navigate('/')}>
+      <div className='textDiv'>
+        <h3>
+          Are you sure you want to log out? You won't be able to add an
+          activities anymore
+        </h3>
+        <div className='btns'>
+          <MDBBtn
+            className='mx-2'
+            color='info'
+            onClick={() => navigate('/')}
+          >
             No
           </MDBBtn>
-          <Link to="/">
-            <MDBBtn className="mx-2" color="danger" onClick={() => handleClick()}>
+          <Link to='/'>
+            <MDBBtn
+              className='mx-2'
+              color='danger'
+              onClick={() => handleClick()}
+            >
               Yes
             </MDBBtn>
           </Link>
