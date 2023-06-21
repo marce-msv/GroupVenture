@@ -6,8 +6,7 @@
 # BE
 ### General
 - [x] TypeScript added
-- [ ] Env file for the server
-- [x] Env files for development and test environments (Test environment has a different database)
+- [x] Env files added for development and test environments containing server port, secret key for session and database name, credentials and port
 - [x] Index.js splitted into index.js and app.js
 
 ### Router
@@ -26,8 +25,12 @@
 
 # FE
 ### General
-- [x] App has now a title and favicon
 - [x] TypeScript amended by removing the any types
+
+### Visual
+- [x] App has now a title and favicon
+- [ ] Navbar amended, elements centered. Clicking on logo redirects to homepage.
+- [x] Some buttons are hard to identify or read because (low contrast ratio with background). Style updated
 
 ### Sign Up / Log In / Log Out
 - [x] When signing up, it logs you automatically and redirects you to the profile(?) page
