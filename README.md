@@ -18,7 +18,8 @@ Install the required npm packages on each folder:
   npm install
   ```
 
-Set up the required environment variables or update and leave the default values for the PostgreSQL credentials and ports
+Set up the required environment variables or update and leave the default values for the PostgreSQL credentials and ports. <br>
+You will also need a Google Maps Api Key and a Clodinary account to upload pictures.
 
 Run the server in the back end and start the app in the front end
   ```console

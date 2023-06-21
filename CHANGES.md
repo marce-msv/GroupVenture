@@ -1,5 +1,5 @@
 # GroupVenture (List of changes - Legacy)
-- [ ] Instructions (README file) added
+- [x] Instructions (README file) added
 
 <br />
 
@@ -29,7 +29,8 @@
 
 ### Visual
 - [x] App has now a title and favicon
-- [ ] Navbar amended, elements centered. Clicking on logo redirects to homepage.
+- [x] Navbar amended, elements centered. Clicking on logo redirects to homepage.
+- [x] Alerts removed. New notifications added.
 - [x] Some buttons are hard to identify or read because (low contrast ratio with background). Style updated
 
 ### Sign Up / Log In / Log Out

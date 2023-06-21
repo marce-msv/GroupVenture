@@ -4,8 +4,6 @@ import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
-console.log(process.env.DB_NAME);
-
 const sequelize = new Sequelize(
   process.env.DB_NAME || 'GroupVenture',
   process.env.DB_USER || 'postgres',

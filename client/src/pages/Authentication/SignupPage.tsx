@@ -170,7 +170,7 @@ export default function SignupPage({
                       <img src={image} />
                       {!image && (
                         <div className='altTextContainer'>
-                          <div> Choose your profile picture</div>
+                          <div>Profile picture</div>
                         </div>
                       )}
                     </div>
