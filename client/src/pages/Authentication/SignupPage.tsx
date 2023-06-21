@@ -1,8 +1,16 @@
-import { MDBBtn, MDBContainer, MDBInput, MDBRow, MDBCol, MDBTextArea } from 'mdb-react-ui-kit';
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBInput,
+  MDBRow,
+  MDBCol,
+  MDBTextArea,
+} from 'mdb-react-ui-kit';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postUser } from '../../Services/serviceUser';
 import './Authentication.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Dispatch, SetStateAction } from 'react';
 
@@ -34,7 +42,9 @@ export default function SignupPage({
 
   const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     if (e.target.id === 'avatar' && e.target instanceof HTMLInputElement) {
       const file = e.target.files?.[0];
       setFormData({
@@ -68,7 +78,16 @@ export default function SignupPage({
       formData.age === 0 ||
       formData.infoAboutUser === ''
     ) {
-      alert('Please fill in all fields');
+      toast.warn('Please fill in all fields', {
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       return;
     }
 
@@ -122,103 +141,115 @@ export default function SignupPage({
       navigate(`/profile/${uid}`);
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred while uploading the image. Please try again.');
+      toast.warn(
+        'An error occurred while uploading the image. Please try again.',
+        {
+          position: 'bottom-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        }
+      );
     }
   };
 
   return (
     <MDBContainer fluid>
       <MDBRow>
-        <MDBCol sm="6">
-          <div className="signUp">
-            <div className="d-flex flex-column justify-content-center h-custom-2 w-75 pt-4">
+        <MDBCol sm='6'>
+          <div className='signUp'>
+            <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-4'>
               <h3
-                className="fw-normal mb-3 ps-5 "
+                className='fw-normal mb-3 ps-5 '
                 style={{ letterSpacing: '3px', marginLeft: '30px' }}
               >
                 <span>Sign Up Now</span>
               </h3>
               <form onSubmit={handleSubmit}>
-                <div className="mb-4 mx-5 w-100">
-                  <div className=" d-flex justify-content-center">
-                    <div className="profileAvatar">
+                <div className='mb-4 mx-5 w-100'>
+                  <div className=' d-flex justify-content-center'>
+                    <div className='profileAvatar'>
                       <img src={image} />
                       {!image && (
-                        <div className="altTextContainer">
+                        <div className='altTextContainer'>
                           <div> Choose your profile picture</div>
                         </div>
                       )}
                     </div>
                   </div>
                   <MDBInput
-                    wrapperClass="mb-0"
-                    id="avatar"
-                    type="file"
-                    size="lg"
-                    accept="image/*"
+                    wrapperClass='mb-0'
+                    id='avatar'
+                    type='file'
+                    size='lg'
+                    accept='image/*'
                     onChange={handleChange}
                   />
                 </div>
                 <MDBInput
-                  wrapperClass="mb-4 mx-5 w-100"
-                  label="First name"
-                  id="firstName"
-                  type="text"
-                  size="lg"
+                  wrapperClass='mb-4 mx-5 w-100'
+                  label='First name'
+                  id='firstName'
+                  type='text'
+                  size='lg'
                   value={formData.firstName}
                   onChange={handleChange}
                 />
                 <MDBInput
-                  wrapperClass="mb-4 mx-5 w-100"
-                  label="Last Name"
-                  id="lastName"
-                  type="text"
-                  size="lg"
+                  wrapperClass='mb-4 mx-5 w-100'
+                  label='Last Name'
+                  id='lastName'
+                  type='text'
+                  size='lg'
                   value={formData.lastName}
                   onChange={handleChange}
                 />
                 <MDBInput
-                  wrapperClass="mb-4 mx-5 w-100"
-                  label="Age"
-                  id="age"
-                  type="number"
-                  size="lg"
-                  min="0"
+                  wrapperClass='mb-4 mx-5 w-100'
+                  label='Age'
+                  id='age'
+                  type='number'
+                  size='lg'
+                  min='0'
                   value={formData.age}
                   onChange={handleChange}
                 />
                 <MDBInput
-                  wrapperClass="mb-4 mx-5 w-100"
-                  label="Email address"
-                  id="email"
-                  type="email"
-                  size="lg"
+                  wrapperClass='mb-4 mx-5 w-100'
+                  label='Email address'
+                  id='email'
+                  type='email'
+                  size='lg'
                   value={formData.email}
                   onChange={handleChange}
                 />
                 <MDBInput
-                  wrapperClass="mb-4 mx-5 w-100"
-                  label="Password"
-                  id="password"
-                  type="password"
-                  size="lg"
+                  wrapperClass='mb-4 mx-5 w-100'
+                  label='Password'
+                  id='password'
+                  type='password'
+                  size='lg'
                   value={formData.password}
                   onChange={handleChange}
                 />
                 <MDBTextArea
-                  wrapperClass="mb-4 mx-5 w-100"
-                  label="Info about you"
-                  id="infoAboutUser"
-                  size="lg"
+                  wrapperClass='mb-4 mx-5 w-100'
+                  label='Info about you'
+                  id='infoAboutUser'
+                  size='lg'
                   value={formData.infoAboutUser}
                   onChange={handleChange}
                 />
                 <MDBBtn
-                  className="mb-4 px-5 mx-5 w-100"
-                  color="info"
-                  size="lg"
-                  type="submit"
-                  data-testid="sign-up-btn"
+                  className='mb-4 px-5 mx-5 w-100'
+                  color='info'
+                  size='lg'
+                  type='submit'
+                  data-testid='sign-up-btn'
                 >
                   Sign Up
                 </MDBBtn>
@@ -226,11 +257,14 @@ export default function SignupPage({
             </div>
           </div>
         </MDBCol>
-        <MDBCol sm="6" className="d-none d-sm-block px-0">
+        <MDBCol
+          sm='6'
+          className='d-none d-sm-block px-0'
+        >
           <img
-            src="signUp.jpeg"
-            alt="Sign up image"
-            className="w-100"
+            src='signUp.jpeg'
+            alt='Sign up image'
+            className='w-100'
             style={{
               objectFit: 'cover',
               objectPosition: 'left',

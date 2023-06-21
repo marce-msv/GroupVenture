@@ -5,6 +5,7 @@ p {
 background-color: rgba(0, 0, 0, 0.364);
 border-radius: 7px;
 padding: 1rem;
+width: 60vw;
 }
 
 .activity-link{

@@ -21,6 +21,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import './CardsForActivity.css';
 import { UserInterface } from '../../pages/Profile/Profile';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export interface Coordinates {
   lat: number | null;
@@ -161,8 +164,18 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
       activityId: parseInt(marker.id || ''),
     };
 
-    alert(
-      `You just joined an activity created by: ${creator.firstName}, for for further communication use this link ${activity.telegramLink} `
+    toast.info(
+      `You've joined this activity created by: ${creator.firstName}, join in the following link ${activity.telegramLink} `,
+      {
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      }
     );
     updateUserActivity(participantsData)
       .then((response) => {
@@ -222,6 +235,8 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
       />
     );
   }
+
+  const notify = () => toast('Wow so easy !');
 
   return (
     <div className='card'>
