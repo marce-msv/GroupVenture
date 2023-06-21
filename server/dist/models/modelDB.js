@@ -25,7 +25,7 @@ const sequelize = new sequelize_1.Sequelize(process.env.DB_NAME || 'GroupVenture
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield sequelize.sync();
-        console.log('Connected to the db at port 5432');
+        console.log('Connected to the database');
     }
     catch (error) {
         console.error('Not connected to the database:', error);

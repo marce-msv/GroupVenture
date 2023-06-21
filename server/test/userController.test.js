@@ -1,9 +1,9 @@
 'use strict';
 
 const request = require('supertest');
-const { default: User } = require('../models/user');
-const { default: app } = require('../app.js');
-const { default: sequelize } = require('../models/modelDB');
+const { default: User } = require('../dist/models/user');
+const { default: app } = require('../dist/app.js');
+const { default: sequelize } = require('../dist/models/modelDB');
 
 beforeAll(async () => {
   await User.destroy({ where: {} });

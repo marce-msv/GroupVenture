@@ -21,7 +21,7 @@ const sequelize = new Sequelize(
 (async () => {
   try {
     await sequelize.sync();
-    console.log('Connected to the db at port 5432');
+    console.log('Connected to the database');
   } catch (error) {
     console.error('Not connected to the database:', error);
   }
