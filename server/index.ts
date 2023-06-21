@@ -2,7 +2,7 @@ import app from './app';
 
 (async () => {
   try {
-    const port = 3333;
+    const port = process.env.SERVER_PORT || 3333;
     app.listen(port, () => {
       console.log(`Server listening on port ${port}`);
     });
