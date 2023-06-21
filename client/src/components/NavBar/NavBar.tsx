@@ -12,25 +12,25 @@ export default function NavBar() {
   }, [uid]);
 
   return (
-    <div className="navbar">
-      <nav id="nav">
+    <div className='navbar'>
+      <nav id='nav'>
         <div
-          className="app-name"
+          className='app-name'
           style={{
             fontFamily: 'Orbit',
             fontStyle: 'sans-serif',
             fontWeight: 'cursive',
           }}
         >
-          GroupVenture
-          <span className="material-symbols-outlined">diversity_3</span>
+          <Link to='/'>GroupVenture</Link>
+          <span className='material-symbols-outlined'>diversity_3</span>
         </div>
         <li>
-          <Link to="/">Home</Link>
+          <Link to='/'>Home</Link>
         </li>
         {showLogin ? (
           <li>
-            <Link to="/login">Login</Link>
+            <Link to='/login'>Login</Link>
           </li>
         ) : (
           <>
@@ -38,7 +38,7 @@ export default function NavBar() {
               <Link to={`/profile/${uid}`}>Profile</Link>
             </li>
             <li>
-              <Link to="/logout">Logout</Link>
+              <Link to='/logout'>Logout</Link>
             </li>
           </>
         )}

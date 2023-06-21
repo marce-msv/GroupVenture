@@ -46,7 +46,7 @@ export default function Profile() {
   }, [uid, profileUser]);
 
   useEffect(() => {
-    if (profileEdited && typeof id === 'number') {
+    if (profileEdited && id) {
       getUserById(id)
         .then((user: UserInterface) => {
           if (user) {
