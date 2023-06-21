@@ -50,6 +50,7 @@
   align-self: flex-end;
 }
 .avatar {
+  margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,4 +67,23 @@
 }
 .width-btn {
   width: 150px;
+}
+
+.participants {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.participantImg {
+  width: 60px;
+  height: 60px;
+}
+.participantImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: 10px;
 }

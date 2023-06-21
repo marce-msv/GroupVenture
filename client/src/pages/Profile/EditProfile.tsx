@@ -28,10 +28,6 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: EditProfil
 
   const uid = useUID();
 
-  // useEffect(() => {
-  //   console.log('useeffffect');
-  // }, []);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target.id === 'avatar' && e.target instanceof HTMLInputElement) {
       const file = e.target.files?.[0];
@@ -79,9 +75,6 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: EditProfil
       }
 
       if (!profileUser) return; // TODO revisar esta logica
-
-      console.log('user', profileUser);
-      console.log('formdata', formData);
 
       const user: UserInterface | FormDataInterface = {
         avatar: formData.avatar !== null ? imageUrl : profileUser.avatar,
