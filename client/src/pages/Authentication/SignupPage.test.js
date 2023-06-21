@@ -71,7 +71,6 @@ describe('SignUp Page', () => {
     act(() => {
       userEvent.click(submitButton);
     });
-
     //
     await waitFor(() => {
       expect(setIsLoggedIn).toHaveBeenCalledWith(true);

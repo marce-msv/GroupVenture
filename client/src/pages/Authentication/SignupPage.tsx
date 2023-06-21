@@ -100,8 +100,6 @@ export default function SignupPage({
       };
 
       const responsex = await postUser(user);
-console.log(responsex);
-
 
       setFormData({
         avatar: null,
