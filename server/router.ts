@@ -8,11 +8,6 @@ import {
   userActivityController,
 } from './controllers/indexController';
 
-router.get('/test', async (req, res) => {
-  res.status(200);
-  res.json({ message: 'pass!' });
-});
-
 // User
 router.post('/signup', usersController.postUser);
 router.post('/login', usersController.login);
