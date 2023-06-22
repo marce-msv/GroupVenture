@@ -124,18 +124,8 @@ describe('User controllers tests', () => {
       expect(res.status).toBe(200);
       expect(parsedRes.message).toBe('Logout successful');
     });
-    //
-    // NO IDEA HOW TO DEAL WITH UNSUCESSFUL LOG OUT
-    // it('Logs out unsuccesfully', async () => {
-    //   const res = await request(app).post('/logout');
-    //   const parsedRes = JSON.parse(res.text);
-    //   expect(res.status).toBe(500);
-    //   expect(parsedRes.message).toBe('Could not log out, please try again');
-    // });
-    //
   });
   //
-  // HOW TO TEST THE AUTHENTICATION MIDDLEWARE ?
   describe('Get user', () => {
     //
     it('Fetchs user info', async () => {
@@ -152,12 +142,7 @@ describe('User controllers tests', () => {
       expect(res.status).toBe(400);
       expect(parsedRes.message).toBe('Bad user request');
     });
-    //
   });
-  //
-  // HOW IS THIS CONTROLLER WORKING ?
-  // describe('Edit user', () => {});
-  //
 });
 
 const mocks = {
