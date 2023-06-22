@@ -11,8 +11,9 @@ import moment from 'moment';
 import './CardsForActivity.css';
 import { UserInterface } from '../../pages/Profile/Profile';
 import { ToastContainer, toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
+import peoSfx from './QuickReverbFartXS.wav';
+import useSound from 'use-sound';
 
 export interface Coordinates {
   lat: number | null;
@@ -34,6 +35,7 @@ interface User {
   infoAboutUser: string;
   id: number;
 }
+
 
 const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -67,6 +69,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
   });
 
   const uid = useUID();
+  const [play] = useSound(peoSfx);
 
   useEffect(() => {
     if (marker.id) {
@@ -192,6 +195,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose }) 
   };
 
   const deleteActivity = () => {
+    play()
     deleteActivityByID(activity.id).then(() => {
       handleClose();
     });

@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbit&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
 .navbar {
   width: 100%;
   height: 5rem;
   background-color: #ffffff;
   display: flex;
   font-size: 20px;
-
 }
 #nav {
   display: flex;
@@ -14,8 +13,7 @@
   align-items: center;
 }
 
-
-#nav a:hover{
+#nav a:hover {
   color: rgb(47, 136, 245);
   font-weight: 700;
 }
@@ -35,11 +33,16 @@ li {
   font-weight: bold;
 }
 
-.app-name h2{
+.app-name h2 {
   color: black;
 }
 
-.app-name a:hover{
+.app-name a:hover {
   color: black;
+}
 
+.music-btn {
+  margin-right: 20px;
+  cursor: pointer;
+  opacity: 20%;
 }

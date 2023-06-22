@@ -12,10 +12,10 @@ describe('home page', () => {
   it('should go to login and back home', () => {
     cy.contains('Login').click();
     cy.location('pathname').should('eq', '/login');
-    cy.get('#email').type('perro@mail.com');
-    cy.get('#password').type('123');
+    cy.get('#email').type('2@2');
+    cy.get('#password').type('2');
     cy.get('.ripple').click();
-    cy.location('pathname').should('eq', '/profile/5');
+    cy.location('pathname').should('eq', '/profile/214');
     cy.get('.infoAboutUser').should('exist');
     cy.contains('Home').click();
     cy.location('pathname').should('eq', '/');
@@ -31,7 +31,7 @@ describe('home page', () => {
     cy.get('#firstName').type('Top');
     cy.get('#lastName').type('Cat');
     cy.get('#age').type('2');
-    cy.get('#email').type('i@mail.com'); // change every test
+    cy.get('#email').type('cypress@test4'); // change every test
     cy.get('#password').type('123456');
     cy.get('#infoAboutUser').type('Leader of The Gang');
     cy.get('.ripple').click();
@@ -48,10 +48,10 @@ describe('home page', () => {
 
     cy.contains('Login').click();
     cy.location('pathname').should('eq', '/login');
-    cy.get('#email').type('perro@mail.com');
-    cy.get('#password').type('123');
+    cy.get('#email').type('3@3');
+    cy.get('#password').type('3');
     cy.get('.ripple').click();
-    cy.location('pathname').should('eq', '/profile/5');
+    cy.location('pathname').should('eq', '/profile/215');
     cy.get('.infoAboutUser').should('exist');
     cy.get('.btns > div > .ripple').click();
     cy.contains('Add an activity');
