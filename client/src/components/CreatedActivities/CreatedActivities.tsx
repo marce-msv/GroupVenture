@@ -35,19 +35,21 @@ const CreatedActivities = () => {
   return (
     <>
       {createdActivities.length > 0 && (
-        <div className='createdActv'>
+        <>
           <div className='created-activities-title'> Created activities:</div>
-          <div className='activity-list'>
-            {createdActivities.map((activity, index) => (
-              <div key={activity.id}>
-                <span>
-                  {activity.title}
-                  {index !== createdActivities.length - 1 && ','}
-                </span>
-              </div>
-            ))}
+          <div className='createdActv'>
+            <div className='activity-list'>
+              {createdActivities.map((activity, index) => (
+                <ul key={activity.id}>
+                  <li>
+                    {activity.title}
+                    {index !== createdActivities.length - 1}
+                  </li>
+                </ul>
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

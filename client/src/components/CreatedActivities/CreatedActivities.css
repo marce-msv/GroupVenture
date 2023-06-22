@@ -1,21 +1,27 @@
 .createdActv {
   display: flex;
-  overflow-x: auto;
+  overflow-y: auto;
   scroll-behavior: smooth;
   width: 80%;
   max-width: 100%;
-  height: 50px;
+  height: 50%;
   margin-bottom: 16px;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   padding: 7px;
-
+  
   margin: 15px;
 }
 
 .activity-list {
   display: flex;
   flex-wrap: nowrap;
+  flex-direction: column;
+  overflow-y:auto;
+  width: 100%;
+}
+.activity-list li {
+  list-style: square;
 }
 
 .activity-list > div {
@@ -23,12 +29,11 @@
   margin-right: 8px;
 }
 
-.activity-list span {
-  flex-shrink: 0;
-}
 .created-activities-title {
   white-space: nowrap;
   font-weight: bold;
+  font-size: x-large;
+  margin-top: 1rem;
 }
 .createdActv::-webkit-scrollbar {
   display: none;

@@ -43,10 +43,13 @@
 }
 
 .infoAboutUser {
+  display: flex;
   padding: 5px;
   width: 80%;
   background-color: white;
   border-radius: 10px;
+  justify-content: center;
+  font-size: larger;
 }
 .btns {
   margin: 15px;
