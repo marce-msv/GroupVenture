@@ -1,7 +1,7 @@
 let root = "http://localhost:3333/";
 
 export const updateUserActivity = function (participantsData: {
-  userId: string;
+  userId: number;
   activityId: number;
 }) {
   return fetch(root + "activities/join", {

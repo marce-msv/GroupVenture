@@ -1,24 +1,26 @@
 .mainPage {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: calc(100vh - 80px);
   background-size: cover;
-  justify-content: center;
 }
 .bodyHome {
   width: 60vw;
   max-height: auto;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  border-radius: 1rem;
   margin-top: 10px;
+  margin: 2rem 0rem;
 }
 .homePageMain {
   display: flex;
   align-items: center;
   flex-direction: column;
+  filter: blur(0px);
 }
 
 .mapHomePage {
+  position: relative;
   height: 60%;
 }
 .search-form {

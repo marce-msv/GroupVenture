@@ -1,9 +1,16 @@
 .login {
-  height: 100vh;
   display: flex;
   justify-content: center;
   margin-right: 80px;
+  position: fixed;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
 }
+
 .signUp {
   padding: 20px;
 }
@@ -13,7 +20,7 @@
   align-items: center;
   flex-direction: column;
   background-color: rgba(240, 248, 255, 0.679);
-  width: 70%;
+  width: 70vw;
   border-radius: 15px;
   margin: 300px;
 }
@@ -47,4 +54,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+ .img-container img{
+  width: 70%;
+  margin-left: 8rem;
 }

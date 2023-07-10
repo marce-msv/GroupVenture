@@ -1,11 +1,3 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useState,
-  useRef,
-  useEffect,
-} from "react";
-import Map, { Coordinates } from "../../components/Map/Map";
 import {
   MDBBtn,
   MDBContainer,
@@ -13,25 +5,29 @@ import {
   MDBRow,
   MDBCol,
   MDBTextArea,
-} from "mdb-react-ui-kit";
-import { Autocomplete } from "@react-google-maps/api";
-import { postActivity } from "../../Services/serviceActivity";
-import { useUID } from "../../customHooks";
+} from 'mdb-react-ui-kit';
+import { ChangeEvent, FormEvent, useState, useRef, useEffect } from 'react';
+import Map, { Coordinates } from '../../components/Map/Map';
+import { Autocomplete } from '@react-google-maps/api';
+import { postActivity } from '../../Services/serviceActivity';
+import { useUID } from '../../customHooks';
+import { useNavigate } from 'react-router-dom';
 
 export interface ActivityInterface {
-  id?: string;
+  id: string;
   title: string;
   date: string;
   meetingPoint: string;
   coordinates: Coordinates;
   typeOfActivity: string;
   aboutActivity: string;
-  spots: string;
+  spots: number;
   telegramLink: string;
+  createdBy: number;
+  UserActivityParticipations: number[];
 }
 
 export default function AddActivityPage() {
-  const uid = useUID();
   const geocoder = new google.maps.Geocoder();
   const [markerPosition, setMarkerPosition] = useState<Coordinates | null>(
     null
@@ -41,18 +37,24 @@ export default function AddActivityPage() {
     lng: 2.154007,
   });
   const [formData, setFormData] = useState<ActivityInterface>({
-    title: "",
-    date: "",
-    meetingPoint: "",
+    title: '',
+    date: '',
+    meetingPoint: '',
     coordinates: {
       lat: null,
       lng: null,
     },
-    typeOfActivity: "",
-    aboutActivity: "",
-    spots: "",
-    telegramLink: "",
+    typeOfActivity: '',
+    aboutActivity: '',
+    spots: 0,
+    telegramLink: '',
+    createdBy: 0,
+    UserActivityParticipations: [],
+    id: '',
   });
+
+  const uid = useUID();
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -67,7 +69,7 @@ export default function AddActivityPage() {
   useEffect(() => {
     const address = formData.meetingPoint;
 
-    if (address === "") {
+    if (address === '') {
       return;
     }
 
@@ -107,21 +109,29 @@ export default function AddActivityPage() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postActivity(formData, uid);
+    const safeFormData = { ...formData, spots: +formData.spots };
+
+    postActivity(safeFormData, uid);
     setFormData({
-      title: "",
-      date: "",
-      meetingPoint: "",
+      title: '',
+      date: '',
+      meetingPoint: '',
       coordinates: {
         lat: null,
         lng: null,
       },
-      typeOfActivity: "",
-      aboutActivity: "",
-      spots: "",
-      telegramLink: "",
+      typeOfActivity: '',
+      aboutActivity: '',
+      spots: 0,
+      telegramLink: '',
+      createdBy: 0,
+      UserActivityParticipations: [],
+      id: '',
     });
+
+    navigate('/');
   };
+
   const mapRef = useRef<google.maps.Map | null>(null);
 
   const handleTypeOfActivityChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -130,14 +140,14 @@ export default function AddActivityPage() {
       typeOfActivity: e.target.value,
     });
   };
-  const handleMapClick = (event: any) => {
-    console.log("location before geocoder");
-    const latitude = event.latLng.lat();
-    const longitude = event.latLng.lng();
-    const location = new google.maps.LatLng(latitude, longitude);
 
-    console.log("location before geocoder");
-    console.log(location);
+  const handleMapClick = (event: google.maps.MapMouseEvent) => {
+    const latitude = event.latLng?.lat();
+    const longitude = event.latLng?.lng();
+
+    if (!latitude || !longitude) return;
+
+    const location = new google.maps.LatLng(latitude, longitude);
 
     geocoder.geocode({ location }, (results, status) => {
       if (
@@ -145,7 +155,6 @@ export default function AddActivityPage() {
         results &&
         results.length > 0
       ) {
-        console.log("i am here");
         const address = results[0].formatted_address;
 
         setFormData({
@@ -156,13 +165,6 @@ export default function AddActivityPage() {
             lng: location.lng(),
           },
         });
-        console.log("Selected place:", address);
-        console.log("Location:", location.lat(), location.lng());
-
-        const marker = new google.maps.Marker({
-          position: location,
-          map: mapRef.current,
-        });
       } else {
         setFormData({
           ...formData,
@@ -170,18 +172,23 @@ export default function AddActivityPage() {
         });
       }
     });
-
-    console.log("Map clicked:", event.latLng.lat(), event.latLng.lng());
   };
+
   return (
     <MDBContainer fluid>
       <MDBRow className='justify-content-center'>
         <MDBCol sm='5'>
           <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
-            <h3 className='fw-normal mb-3' style={{ letterSpacing: "1px" }}>
+            <h3
+              className='fw-normal mb-3'
+              style={{ letterSpacing: '1px' }}
+            >
               Add an activity
             </h3>
-            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <form
+              onSubmit={handleSubmit}
+              style={{ width: '100%' }}
+            >
               <MDBInput
                 wrapperClass='mb-4 w-100'
                 label='Title'
@@ -204,7 +211,7 @@ export default function AddActivityPage() {
                   onPlaceChanged={() => {
                     const selectedPlace = (
                       document.getElementById(
-                        "meetingPoint"
+                        'meetingPoint'
                       ) as HTMLInputElement
                     ).value;
 
@@ -232,7 +239,10 @@ export default function AddActivityPage() {
                 />
               </div>
               <div className='mb-4'>
-                <label htmlFor='typeOfActivity' className='form-label'></label>
+                <label
+                  htmlFor='typeOfActivity'
+                  className='form-label'
+                ></label>
                 <select
                   id='typeOfActivity'
                   className='form-select'

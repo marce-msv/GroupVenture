@@ -1,4 +1,3 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -6,10 +5,14 @@ import {
   MDBRow,
   MDBCol,
   MDBTextArea,
-} from "mdb-react-ui-kit";
-import { useNavigate } from "react-router-dom";
-import { postUser } from "../../Services/serviceUser";
-import "./Authentication.css";
+} from 'mdb-react-ui-kit';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { postUser } from '../../Services/serviceUser';
+import './Authentication.css';
+import { ToastContainer, toast } from 'react-toastify';
+
+import { Dispatch, SetStateAction } from 'react';
 
 export interface FormDataInterface {
   avatar: string | File | null;
@@ -17,28 +20,34 @@ export interface FormDataInterface {
   lastName: string;
   email: string;
   password: string;
-  age: string;
+  age: number;
   infoAboutUser: string;
 }
 
-export default function SignupPage() {
-  const navigate = useNavigate();
+const initialFormData = {
+  avatar: null,
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  age: 0,
+  infoAboutUser: '',
+}
 
-  const [image, _setImage] = useState<string | undefined>(undefined);
-  const [formData, setFormData] = useState<FormDataInterface>({
-    avatar: null,
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    age: "",
-    infoAboutUser: "",
-  });
+export default function SignupPage({
+  setIsLoggedIn,
+}: {
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+}) {
+  const [image, _setImage] = useState<string>();
+  const [formData, setFormData] = useState<FormDataInterface>(initialFormData);
+
+  const navigate = useNavigate();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (e.target.id === "avatar" && e.target instanceof HTMLInputElement) {
+    if (e.target.id === 'avatar' && e.target instanceof HTMLInputElement) {
       const file = e.target.files?.[0];
       setFormData({
         ...formData,
@@ -64,31 +73,41 @@ export default function SignupPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
-      formData.firstName === "" ||
-      formData.lastName === "" ||
-      formData.email === "" ||
-      formData.password === "" ||
-      formData.age === "" ||
-      formData.infoAboutUser === ""
+      formData.firstName === '' ||
+      formData.lastName === '' ||
+      formData.email === '' ||
+      formData.password === '' ||
+      formData.age === 0 ||
+      formData.infoAboutUser === ''
     ) {
-      alert("Please fill in all fields");
+      toast.warn('Please fill in all fields', {
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       return;
     }
 
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dpzz6vn2w/upload";
-    const cloudinaryUploadPreset = "AleCloud";
+    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dpzz6vn2w/upload';
+    const cloudinaryUploadPreset = 'AleCloud';
 
     const formDataToUpload = new FormData();
-    formDataToUpload.append("file", formData.avatar || "");
-    formDataToUpload.append("upload_preset", cloudinaryUploadPreset);
+    formDataToUpload.append('file', formData.avatar || '');
+    formDataToUpload.append('upload_preset', cloudinaryUploadPreset);
 
     try {
       const response = await fetch(cloudinaryUrl, {
-        method: "POST",
+        method: 'POST',
         body: formDataToUpload,
       });
 
       const data = await response.json();
+
       const imageUrl = data.url;
 
       const user = {
@@ -101,27 +120,34 @@ export default function SignupPage() {
         infoAboutUser: formData.infoAboutUser,
       };
 
-      await postUser(user);
+      const responsex = await postUser(user);
 
-      setFormData({
-        avatar: null,
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        age: "",
-        infoAboutUser: "",
-      });
+      setFormData(initialFormData);
 
-      const fileInput = document.getElementById("avatar") as HTMLInputElement;
+      const fileInput = document.getElementById('avatar') as HTMLInputElement;
       if (fileInput) {
-        fileInput.value = "";
+        fileInput.value = '';
       }
 
-      navigate("/login");
+      const uid = responsex.data.id;
+      localStorage.setItem('uid', uid);
+      setIsLoggedIn(true);
+      navigate(`/profile/${uid}`);
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred while uploading the image. Please try again.");
+      console.error('Error:', error);
+      toast.warn(
+        'An error occurred while uploading the image. Please try again.',
+        {
+          position: 'bottom-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        }
+      );
     }
   };
 
@@ -133,7 +159,7 @@ export default function SignupPage() {
             <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-4'>
               <h3
                 className='fw-normal mb-3 ps-5 '
-                style={{ letterSpacing: "3px", marginLeft: "30px" }}
+                style={{ letterSpacing: '3px', marginLeft: '30px' }}
               >
                 <span>Sign Up Now</span>
               </h3>
@@ -144,7 +170,7 @@ export default function SignupPage() {
                       <img src={image} />
                       {!image && (
                         <div className='altTextContainer'>
-                          <div> Choose your profile picture</div>
+                          <div>Profile picture</div>
                         </div>
                       )}
                     </div>
@@ -217,6 +243,7 @@ export default function SignupPage() {
                   color='info'
                   size='lg'
                   type='submit'
+                  data-testid='sign-up-btn'
                 >
                   Sign Up
                 </MDBBtn>
@@ -224,17 +251,20 @@ export default function SignupPage() {
             </div>
           </div>
         </MDBCol>
-        <MDBCol sm='6' className='d-none d-sm-block px-0'>
+        <MDBCol
+          sm='6'
+          className='d-none d-sm-block px-0'
+        >
           <img
             src='signUp.jpeg'
             alt='Sign up image'
             className='w-100'
             style={{
-              objectFit: "cover",
-              objectPosition: "left",
-              width: "100%",
-              height: "100%",
-              maxHeight: "auto",
+              objectFit: 'cover',
+              objectPosition: 'left',
+              width: '100%',
+              height: '100%',
+              maxHeight: 'auto',
             }}
           />
         </MDBCol>

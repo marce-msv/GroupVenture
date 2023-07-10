@@ -1,34 +1,43 @@
-import React, { ChangeEvent, FormEvent, useContext } from "react";
-import "./Profile.css";
-import { useParams } from "react-router-dom";
-import { getUserById } from "../../Services/serviceUser";
-import { useState, useEffect } from "react";
-import AddActivity from "../../components/AddActivity/AddActivity";
-import CreatedActivities from "../../components/CreatedActivities/CreatedActivities";
-import EditProfile from "./EditProfile";
-import { useUID } from "../../customHooks";
-import { MDBBtn } from "mdb-react-ui-kit";
+import CreatedActivities from '../../components/CreatedActivities/CreatedActivities';
+import AddActivity from '../../components/AddActivity/AddActivity';
+import EditProfile from './EditProfile';
+import { useState, useEffect } from 'react';
+import { getUserById } from '../../Services/serviceUser';
+import { useParams } from 'react-router-dom';
+import { useUID } from '../../customHooks';
+import { MDBBtn } from 'mdb-react-ui-kit';
+import './Profile.css';
+
+export interface UserInterface {
+  id: number;
+  avatar: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  password: string;
+  email: string;
+  infoAboutUser: string;
+}
 
 export default function Profile() {
-  const { id } = useParams();
   const uid = useUID();
-  const [profileUser, setProfileUser] = useState<any | null>(null);
-  const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [isEditing, setEditing] = useState<boolean>(false);
+  const { id } = useParams();
   const [profileEdited, setProfileEdited] = useState<boolean>(false);
+  const [profileUser, setProfileUser] = useState<UserInterface | null>(null);
+  const [isEditable, setIsEditable] = useState<boolean>(true);
+  const [isEditing, setEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    getUserById(id)
-      .then((user: any) => {
-        if (user) {
-          setProfileUser(user);
-        }
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
+    if (id) {
+      getUserById(id)
+        .then((user: UserInterface) => {
+          if (user) setProfileUser(user);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
   }, []);
-  console.log(profileUser, "profile user");
 
   useEffect(() => {
     if (uid && profileUser && uid === profileUser.id && !isEditable) {
@@ -36,35 +45,10 @@ export default function Profile() {
     }
   }, [uid, profileUser]);
 
-  const handleClose = () => {
-    setEditing(false);
-  };
-  const RenderEditables = () => {
-    if (!isEditable) {
-      return null;
-    }
-
-    const handleEditClick = () => {
-      setEditing((state) => !state);
-    };
-    return (
-      <>
-        <MDBBtn className='mx-2' color='secondary' onClick={handleEditClick}>
-          {" "}
-          Edit Profile
-        </MDBBtn>
-        <AddActivity />
-      </>
-    );
-  };
-
-  const handleProfileEdit = () => {
-    setProfileEdited(true);
-  };
   useEffect(() => {
-    if (profileEdited) {
+    if (profileEdited && id) {
       getUserById(id)
-        .then((user: any) => {
+        .then((user: UserInterface) => {
           if (user) {
             setProfileUser(user);
             setProfileEdited(false);
@@ -75,26 +59,61 @@ export default function Profile() {
         });
     }
   }, [profileEdited, id]);
+
+  const handleClose = () => {
+    setEditing(false);
+  };
+
+  const RenderEditables = () => {
+    if (!isEditable) {
+      return null;
+    }
+
+    const handleEditClick = () => {
+      setEditing((state) => !state);
+    };
+    return (
+      <>
+        <MDBBtn
+          className='mx-2'
+          color='secondary'
+          onClick={handleEditClick}
+        >
+          {' '}
+          Edit Profile
+        </MDBBtn>
+        <AddActivity />
+      </>
+    );
+  };
+
+  const handleProfileEdit = () => {
+    setProfileEdited(true);
+  };
+
   return (
     <div
       className='mainDivForProfile'
       style={{
-        backgroundImage: "url(/pexels.jpeg)",
+        backgroundImage: 'url(/pexels.jpeg)',
       }}
     >
       <div className='profileBody'>
         <div className='profileName'>
           <strong>
-            {profileUser?.firstName || ""} {profileUser?.lastName || ""}
+            {profileUser?.firstName || ''} {profileUser?.lastName || ''}
           </strong>
         </div>
-        {profileUser?.age ? `Age: ${profileUser.age}` : ""}
+        {profileUser?.age ? `Age: ${profileUser.age}` : ''}
         <div className='profileAvatar'>
           {profileUser?.avatar && (
-            <img src={profileUser?.avatar} alt='Avatar' />
+            <img
+              src={profileUser?.avatar}
+              alt='Avatar'
+            />
           )}
         </div>
-        <div className='infoAboutUser'>{profileUser?.infoAboutUser || ""}</div>
+        <div className='infoAboutUser'>{profileUser?.infoAboutUser || ''}</div>
 
         <CreatedActivities />
         <div className='btns'>{RenderEditables()}</div>

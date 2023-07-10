@@ -5,26 +5,39 @@ import {
   MDBInput,
   MDBRow,
   MDBTextArea,
-} from "mdb-react-ui-kit";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { ActivityInterface } from "../../pages/AddActivityPage/AddActivityPage";
-import "./EditActivity.css";
-import { updateActivity } from "../../Services/serviceActivity";
+} from 'mdb-react-ui-kit';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { ActivityInterface } from '../../pages/AddActivityPage/AddActivityPage';
+import { updateActivity } from '../../Services/serviceActivity';
+import './EditActivity.css';
 
-export default function EditActivity({ handleClose, activity }: any) {
-  const [formData, setFormData] = useState<ActivityInterface>({
-    title: "",
-    date: "",
-    meetingPoint: "",
+interface FormEditActivity {
+  handleClose: () => void;
+  activity: ActivityInterface;
+}
+
+export default function EditActivity({
+  handleClose,
+  activity,
+}: FormEditActivity) {
+  const initialFormData = {
+    id: '',
+    title: '',
+    date: '',
+    meetingPoint: '',
     coordinates: {
       lat: null,
       lng: null,
     },
-    typeOfActivity: "",
-    aboutActivity: "",
-    spots: "",
-    telegramLink: "",
-  });
+    typeOfActivity: '',
+    aboutActivity: '',
+    spots: 0,
+    telegramLink: '',
+    createdBy: -1,
+    UserActivityParticipations: [],
+  };
+
+  const [formData, setFormData] = useState<ActivityInterface>(initialFormData);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -35,7 +48,7 @@ export default function EditActivity({ handleClose, activity }: any) {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newActivity = {
       title: formData.title || activity.title,
@@ -46,22 +59,10 @@ export default function EditActivity({ handleClose, activity }: any) {
       aboutActivity: formData.aboutActivity || activity.aboutActivity,
       spots: formData.spots || activity.spots,
       telegramLink: formData.telegramLink || activity.telegramLink,
-    };
-    const activityUpdated = updateActivity(activity.id, newActivity);
+    } as ActivityInterface;
+    await updateActivity(activity.id, newActivity);
     handleClose();
-    setFormData({
-      title: "",
-      date: "",
-      meetingPoint: "",
-      coordinates: {
-        lat: null,
-        lng: null,
-      },
-      typeOfActivity: "",
-      aboutActivity: "",
-      spots: "",
-      telegramLink: "",
-    });
+    setFormData(initialFormData);
   };
 
   const handleTypeOfActivityChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -77,17 +78,23 @@ export default function EditActivity({ handleClose, activity }: any) {
         <MDBRow className='justify-content-center'>
           <MDBCol sm='9'>
             <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
-              <h3 className='fw-normal mb-3' style={{ letterSpacing: "1px" }}>
+              <h3
+                className='fw-normal mb-3'
+                style={{ letterSpacing: '1px' }}
+              >
                 Change info about activity
               </h3>
-              <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+              <form
+                onSubmit={handleSubmit}
+                style={{ width: '100%' }}
+              >
                 <MDBInput
                   wrapperClass='mb-2 w-100'
                   label='Title'
                   id='title'
                   type='text'
                   size='lg'
-                  defaultValue={formData.title || activity?.title || ""}
+                  defaultValue={formData.title || activity?.title || ''}
                   onChange={handleChange}
                 />
                 <MDBInput
@@ -95,7 +102,7 @@ export default function EditActivity({ handleClose, activity }: any) {
                   id='date'
                   type='datetime-local'
                   size='lg'
-                  defaultValue={formData.date || activity?.date || ""}
+                  defaultValue={formData.date || activity?.date || ''}
                   onChange={handleChange}
                 />
                 <div className='mb-2'>
@@ -103,10 +110,10 @@ export default function EditActivity({ handleClose, activity }: any) {
                     id='typeOfActivity'
                     className='form-select'
                     defaultValue={
-                      formData.typeOfActivity || activity?.typeOfActivity || ""
+                      formData.typeOfActivity || activity?.typeOfActivity || ''
                     }
                     onChange={handleTypeOfActivityChange}
-                    style={{ background: "transparent" }}
+                    style={{ background: 'transparent' }}
                   >
                     <option value=''>Select an activity type</option>
                     <option value='hiking'>Hiking</option>
@@ -122,7 +129,7 @@ export default function EditActivity({ handleClose, activity }: any) {
                   id='spots'
                   type='number'
                   size='lg'
-                  defaultValue={formData.spots || activity?.spots || ""}
+                  defaultValue={formData.spots || activity?.spots || ''}
                   min='0'
                   onChange={handleChange}
                 />
@@ -133,7 +140,7 @@ export default function EditActivity({ handleClose, activity }: any) {
                   type='text'
                   size='lg'
                   defaultValue={
-                    formData.telegramLink || activity?.telegramLink || ""
+                    formData.telegramLink || activity?.telegramLink || ''
                   }
                   onChange={handleChange}
                 />
@@ -143,7 +150,7 @@ export default function EditActivity({ handleClose, activity }: any) {
                   id='aboutActivity'
                   rows={4}
                   defaultValue={
-                    formData.aboutActivity || activity?.aboutActivity || ""
+                    formData.aboutActivity || activity?.aboutActivity || ''
                   }
                   onChange={handleChange}
                 />

@@ -1,41 +1,48 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import Map, { Coordinates } from "../../components/Map/Map";
-import AddActivity from "../../components/AddActivity/AddActivity";
-import "./Home.css";
-import { getActivities } from "../../Services/serviceActivity";
-import { ActivityInterface } from "../AddActivityPage/AddActivityPage";
-import CardsForActivity from "../../components/CardsForActivity/CardsForActivity";
-import { Autocomplete } from "@react-google-maps/api";
-import { useUID } from "../../customHooks";
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ActivityInterface } from '../AddActivityPage/AddActivityPage';
+import Map, { Coordinates } from '../../components/Map/Map';
+import { getActivities } from '../../Services/serviceActivity';
+import CardsForActivity from '../../components/CardsForActivity/CardsForActivity';
+import { Autocomplete } from '@react-google-maps/api';
+import AddActivity from '../../components/AddActivity/AddActivity';
+import { useUID } from '../../customHooks';
+import './Home.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Home() {
-  const geocoder = new google.maps.Geocoder();
   const [formData, setFormData] = useState({
-    date: "",
+    date: '',
     coordinates: {
       lat: 0,
       lng: 0,
     },
-    meetingPoint: "",
-    typeOfActivity: "",
+    meetingPoint: '',
+    typeOfActivity: '',
   });
+
   const [mapCenter, setMapCenter] = useState<Coordinates>({
     lat: 41.390205,
     lng: 2.154007,
   });
 
   const [markers, setMarkers] = useState<Coordinates[]>([]);
+
   const [selectedMarker, setSelectedMarker] = useState<Coordinates | null>(
     null
   );
+
+  const geocoder = new google.maps.Geocoder();
+
   const uid = useUID();
+
   useEffect(() => {
     loadMarkers();
   }, [selectedMarker]);
+
   useEffect(() => {
     const address = formData.meetingPoint;
 
-    if (address === "") {
+    if (address === '') {
       return;
     }
 
@@ -63,6 +70,7 @@ export default function Home() {
       }
     });
   }, [formData.meetingPoint]);
+
   const loadMarkers = async () => {
     try {
       const activities = await getActivities();
@@ -83,10 +91,11 @@ export default function Home() {
           return true;
         }
       );
+
       const markers = filteredActivities.map((activity: ActivityInterface) => ({
         lat: activity.coordinates.lat,
         lng: activity.coordinates.lng,
-        id: activity.id || "",
+        id: activity.id || '',
       }));
       setMarkers(markers);
     } catch (error) {
@@ -98,15 +107,26 @@ export default function Home() {
     if (uid) {
       setSelectedMarker(marker);
     } else {
-      alert("You need to log in to see information about activities");
+      toast.warn('You need to log in to see information about activities', {
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
   };
+
   const handleTypeOfActivityChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setFormData({
       ...formData,
       typeOfActivity: e.target.value,
     });
   };
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -115,19 +135,18 @@ export default function Home() {
       [e.target.id]: e.target.value,
     });
   };
-  const handleSubmit = (event: any) => {
+
+  const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData.date.substring(0, 10), "here");
-    console.log(formData);
     loadMarkers();
     setFormData({
-      date: "",
+      date: '',
       coordinates: {
         lat: 0,
         lng: 0,
       },
-      meetingPoint: "",
-      typeOfActivity: "",
+      meetingPoint: '',
+      typeOfActivity: '',
     });
   };
 
@@ -135,17 +154,20 @@ export default function Home() {
     <div
       className='mainPage'
       style={{
-        backgroundImage: "url(/pexels.jpeg)",
+        backgroundImage: 'url(/pexels.jpeg)',
       }}
     >
       <div className='homePageMain'>
         <div className='bodyHome'>
-          <form className='search-form' onSubmit={handleSubmit}>
+          <form
+            className='search-form'
+            onSubmit={handleSubmit}
+          >
             <div className='form-group'>
               <Autocomplete
                 onPlaceChanged={() => {
                   const selectedPlace = (
-                    document.getElementById("meetingPoint") as HTMLInputElement
+                    document.getElementById('meetingPoint') as HTMLInputElement
                   ).value;
 
                   setFormData({
@@ -193,7 +215,11 @@ export default function Home() {
               />
             </div>
             <div className='form-group'>
-              <input type='submit' value='Search' className='search-button' />
+              <input
+                type='submit'
+                value='Search'
+                className='search-button'
+              />
             </div>
           </form>
           <div className='mapHomePage'>
