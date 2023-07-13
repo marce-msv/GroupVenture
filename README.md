@@ -1,5 +1,5 @@
 # GroupVenture
-GroupVenture is Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+GroupVenture is a versatile and user-friendly app designed to connect individuals with shared interests and facilitate the organization of various activities. Whether you're looking for a hiking partner, a study group, a sports team, or a gaming session, grouVenture provides a platform where users can create, join, and participate in a wide range of activities. Whether you're looking to expand your social circle or pursue new adventures, groupVenture is the go-to app for turning your ideas into memorable group ventures.
 
 ## Getting started
 
@@ -26,8 +26,12 @@ Run the server in the back end and start the app in the front end
   npm run server // npm start
   ```
 
+## Contributors
+Marcelo Suarez Velarde - [GitHub](https://github.com/marce-msv) - [LinkedIn](https://www.linkedin.com/in/marcesv/)  
+Alejandro Penalver Munita- [GitHub](https://github.com/alepemu) - [LinkedIn](https://www.linkedin.com/in/alejandro-pemu/)
+
 ## Comments and support
-Feedback or suggestions are welcome. <br> Please get in touch via pull request or email.
+Feedback or suggestions are welcome. <br> Please get in touch via pull request or send us an email.
 
 ## Screenshots
 *Home page*
